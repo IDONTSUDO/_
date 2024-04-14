@@ -1,0 +1,11 @@
+*.js
+*.js.map
+.nyc_output
+.DS_Store
+node_modules/
+coverage
+.*.swp
+build/
+model_create.ts
+public
+p.ts
