@@ -5,7 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=dev tsc-watch --onSuccess 'mocha'",
-    "dev": "NODE_ENV=dev tsc-watch --onSuccess 'ts-node ./build/src/main.js'"
+    "dev": "NODE_ENV=dev tsc-watch --onSuccess 'ts-node ./build/src/main.js'",
+    "production": "NODE_ENV=production tsc-watch --onSuccess 'ts-node ./build/src/main.js'",
+    "build": "NODE_ENV=dev tsc-watch --onSuccess 'pm2 start ./build/src/main.js'",
+    "deploy": "pm2 deploy production setup --force",
+    "prod": " pm2 start 'npm run production'"
   },
   "author": "IDONTSUDO",
   "devDependencies": {
