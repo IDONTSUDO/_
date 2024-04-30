@@ -1,1 +1,7 @@
-# _
+# \_
+
+# Deploy
+
+### First
+
+pm2 deploy production setup

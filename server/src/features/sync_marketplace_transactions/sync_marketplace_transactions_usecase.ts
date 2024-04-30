@@ -32,7 +32,6 @@ export class SyncMarketPlaceTransactionsUseCase {
       )
     ).fold(
       async (transactions) => {
-        console.log(transactions.result.operations.length);
         if (transactions.result.row_count === 1000) {
           shop.lastParseTransactionPage += 1;
           await shop.save();

@@ -53,11 +53,7 @@ export class App extends TypedEvent<ServerStatus> {
     this.setServerStatus(ServerStatus.init);
 
     this.loadAppDependencies().then(() => {
-      new SyncMarketPlaceTransactionsUseCase(
-        "979300",
-        "e73d7d61-2cdb-45da-9cc8-aa7e978f9daa",
-        "6600857034c817b44a9e86c9"
-      ).call();
+     
       this.initializeMiddlewares();
       this.initializeRoutes(routes);
       crones.forEach((el) => {
