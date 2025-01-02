@@ -1,10 +1,17 @@
 import { NavigateFunction } from "react-router-dom";
 import { Result } from "../helper/result";
 import { UiBaseError } from "../model/ui_base_error";
-import { HttpError } from "../repository/http_repository";
 import { message } from "antd";
+import { ClassConstructor, plainToInstance } from "class-transformer";
+import { HttpError } from "../repository/http_repository";
 
 export type CoreError = HttpError | Error;
+
+export interface Drawer {
+  name: string;
+  status: boolean;
+}
+
 interface IMessage {
   successMessage?: string;
   errorMessage?: string;
@@ -27,21 +34,17 @@ export abstract class UiLoader {
   abstract errorHandingStrategy: (error?: any) => void;
 
   mapOk = async <T>(property: string, callBack: Promise<Result<CoreError, T>>) => {
-    return (
-      (await this.httpHelper(callBack))
-        // eslint-disable-next-line array-callback-return
-        .map((el) => {
-          // @ts-ignore
-          this[property] = el;
-        })
-    );
+    return (await this.httpHelper(callBack)).map((el) => {
+      // @ts-ignore
+      this[property] = el;
+    });
   };
   messageHttp = async <T>(callBack: Promise<Result<CoreError, T>>, report?: IMessage) => {
     return (await this.httpHelper(callBack)).fold(
-      (s) => {
+      (_s) => {
         if (report && report.successMessage) message.success(report.successMessage);
       },
-      (e) => {
+      (_e) => {
         if (report && report.errorMessage) message.error(report.errorMessage);
       }
     );
@@ -53,10 +56,87 @@ export class SimpleErrorState extends UiLoader {
   };
   isError = false;
 }
+export class ModalStore extends SimpleErrorState {
+  isModalOpen: boolean = false;
+  modalShow = () => {
+    this.isModalOpen = true;
+  };
 
+  modalClickOk = () => {
+    this.isModalOpen = false;
+  };
+
+  modalCancel = () => {
+    this.isModalOpen = false;
+  };
+}
 export abstract class UiErrorState<T> extends UiLoader {
-  abstract errorHandingStrategy: (error: T) => void;
+  errorHandingStrategy = (error: T) => {
+    console.log(error);
+  };
   abstract init(navigate?: NavigateFunction): Promise<any>;
-  dispose() {}
+  dispose() { }
   errors: UiBaseError[] = [];
 }
+
+export abstract class DrawerState<E> extends UiErrorState<E> {
+  titleDrawer: string = "";
+  drawers: Drawer[];
+  constructor(drawerEnum: Object) {
+    super();
+    this.drawers = Object.entries(drawerEnum).map((k, v) => {
+      return {
+        name: k.at(1) ?? "",
+        status: false,
+      };
+    });
+  }
+  editDrawer(drawerName: string, status: boolean): void {
+    this.titleDrawer = drawerName;
+    this.drawers = this.drawers.map((el) => {
+      if (el.name === drawerName) {
+        el.status = status;
+      }
+      return el;
+    });
+  }
+}
+export abstract class UiDrawerFormState<V, E> extends DrawerState<E> {
+  abstract viewModel: V;
+  updateForm(value: Partial<V>) {
+    //@ts-ignore
+    this.viewModel = Object.assign(this.viewModel, value);
+  }
+  loadDependency = (viewModel: V) => {
+    this.viewModel = viewModel;
+  };
+  loadClassInstance = (instance: ClassConstructor<V>, viewModel: V) => {
+    this.viewModel = plainToInstance(instance, viewModel);
+  };
+}
+export abstract class FormState<V, E> extends UiErrorState<E> {
+  abstract viewModel: V;
+  updateForm(value: Partial<V>) {
+    //@ts-ignore
+    this.viewModel = Object.assign(this.viewModel, value);
+  }
+  loadDependency = (viewModel: V | undefined) => {
+    if (viewModel) this.viewModel = viewModel;
+  };
+  loadClassInstance = (instance: ClassConstructor<V>, viewModel: V) => {
+    this.viewModel = plainToInstance(instance, viewModel);
+  };
+  isModalOpen: boolean = false;
+  modalShow = () => {
+    this.isModalOpen = true;
+  };
+
+  modalClickOk = () => {
+    this.isModalOpen = false;
+  };
+
+  modalCancel = () => {
+    this.isModalOpen = false;
+  };
+}
+

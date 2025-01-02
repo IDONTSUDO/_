@@ -1,4 +1,5 @@
 import { Result } from "../helper/result";
+import { ValidationModel } from "../model/validation_model";
 
 export enum HttpMethod {
   GET = "GET",
@@ -70,5 +71,14 @@ export class HttpRepository {
     }
     return Result.ok(response.text as T);
   }
-  
+
+}
+export abstract class CoreHttpRepository extends HttpRepository {
+  abstract featurePath: string;
+}
+export abstract class CrudHttpRepository<M extends ValidationModel> extends CoreHttpRepository {
+  getPage = (page = 0) => this._jsonRequest<M[]>(HttpMethod.GET, this.featurePath);
+  edit = async (model: M) => (await model.validMessage<M>()).map((validationModel) => this._jsonRequest(HttpMethod.PUT, this.featurePath, validationModel));
+  newModel = async (model: M) => (await model.validMessage<M>()).map((validationModel) => this._jsonRequest(HttpMethod.POST, this.featurePath, validationModel));
+
 }
