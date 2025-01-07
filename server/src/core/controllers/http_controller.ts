@@ -187,7 +187,7 @@ export class CoreHttpController<V> implements ICoreHttpController {
     if (req["model"] != undefined) {
       payload = req.body as T;
     }
-
+     
     if (req.query.page !== undefined) {
       payload = String(req.query.page);
     }

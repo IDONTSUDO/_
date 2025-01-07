@@ -79,6 +79,6 @@ export abstract class CoreHttpRepository extends HttpRepository {
 export abstract class CrudHttpRepository<M extends ValidationModel> extends CoreHttpRepository {
   getPage = (page = 0) => this._jsonRequest<M[]>(HttpMethod.GET, this.featurePath);
   edit = async (model: M) => (await model.validMessage<M>()).map((validationModel) => this._jsonRequest(HttpMethod.PUT, this.featurePath, validationModel));
-  newModel = async (model: M) => (await model.validMessage<M>()).map((validationModel) => this._jsonRequest(HttpMethod.POST, this.featurePath, validationModel));
-
+  addModel = async (model: M) => (await model.validMessage<M>()).map((validationModel) => this._jsonRequest(HttpMethod.POST, this.featurePath, validationModel));
+  deleteModel = async (id: string) => this._jsonRequest(HttpMethod.DELETE, this.featurePath + `?id=${id}`);
 }

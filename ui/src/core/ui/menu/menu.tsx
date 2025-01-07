@@ -13,6 +13,7 @@ export enum MenuItems {
 interface CoreMenuProps {
   page: MenuItems;
   children?: JSX.Element | JSX.Element[];
+  bottom?: JSX.Element | JSX.Element[];
 }
 
 export const CoreMenu = (props: CoreMenuProps) => {
@@ -49,7 +50,7 @@ export const CoreMenu = (props: CoreMenuProps) => {
         ref={ref}
       >
         {props.page}
-        <div>{props.children}</div>
+        
       </div>
 
       <input
@@ -76,6 +77,8 @@ export const CoreMenu = (props: CoreMenuProps) => {
           ))}
         </ul>
       </div>
+      <div style={{ position: "absolute", bottom: 0 }}>{props.bottom}</div>
+      <div>{props.children}</div>
     </>
   );
 };

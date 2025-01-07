@@ -3,7 +3,7 @@ import { AuthorizationModel } from "./authorization_model";
 import { message } from "antd";
 import { AuthorizationLocalStorageRepository } from "./authorization_local_storage_repository";
 import { NavigateFunction } from "react-router-dom";
-import { MainScreenPath } from "../main/main_screen";
+import { DocumentsScreenPath } from "../documents/documents_screen";
 
 export class AuthorizationStore {
   authorizationModel: AuthorizationModel;
@@ -24,7 +24,7 @@ export class AuthorizationStore {
       () => {
         console.log(201)
         this.authorizationLocalStorageRepository.setAuthStatus();
-        if (this.navigate) this.navigate(MainScreenPath);
+        if (this.navigate) this.navigate(DocumentsScreenPath);
       },
       (e) => message.error(e)
     );

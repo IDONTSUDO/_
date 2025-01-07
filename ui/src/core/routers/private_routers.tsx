@@ -1,14 +1,28 @@
-import { MainScreen, MainScreenPath } from "../../features/main/main_screen";
-import { ShopsScreen, ShopsScreenPath } from "../../features/shops/shops_screen";
+import {
+  DocumentViewScreen,
+  DocumentViewScreenPath,
+} from "../../features/document_view/document_view_screen";
+import {
+  DocumentsScreen,
+  DocumentsScreenPath,
+} from "../../features/documents/documents_screen";
+import {
+  ShopsScreen,
+  ShopsScreenPath,
+} from "../../features/shops/shops_screen";
 import { IRouter } from "./routers";
 
 export const privateRouters: IRouter[] = [
   {
-    path: MainScreenPath,
-    element: <MainScreen />,
+    path: DocumentsScreenPath,
+    element: <DocumentsScreen />,
   },
   {
     path: ShopsScreenPath,
-    element: <ShopsScreen/>,
+    element: <ShopsScreen />,
+  },
+  {
+    path: DocumentViewScreenPath + '/' + ':id',
+    element: <DocumentViewScreen />,
   },
 ];

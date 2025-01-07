@@ -8,9 +8,6 @@ import { SocketSubscriber } from "./socket_controller";
 import { DataBaseConnectUseCase } from "../usecases/database_connect_usecase";
 import { TypedEvent } from "../helpers/typed_event";
 import { CronController } from "./cron_controller";
-import { SyncMarketPlaceTransactionsUseCase } from "../../features/sync_marketplace_transactions/sync_marketplace_transactions_usecase";
-import { TransactionDBModel } from "../../features/sync_marketplace_transactions/trasaction_database_model";
-import { SyncMarketPlaceProductsUsecase } from "../../features/sync_marketplace_products/sync_market_products_usecase";
 
 export enum ServerStatus {
   init = "init",

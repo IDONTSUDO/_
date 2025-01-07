@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { AuthorizationStore } from "./authorization_store";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { MainScreenPath } from "../main/main_screen";
+import { DocumentsScreenPath } from "../documents/documents_screen";
 
 export const AuthorizationScreenPath = "/auth";
 export const AuthorizationScreen = observer(() => {
@@ -13,7 +13,7 @@ export const AuthorizationScreen = observer(() => {
   useEffect(() => {
     store.init(navigate);
     if (store.authorizationLocalStorageRepository.isAuth().isSuccess())
-      navigate(MainScreenPath);
+      navigate(DocumentsScreenPath);
   }, []);
 
   return (

@@ -1,6 +1,5 @@
 export const MapExtensions = () => {
   if (Map.prototype.addValueOrMakeCallback === undefined) {
-    // eslint-disable-next-line no-extend-native
     Map.prototype.addValueOrMakeCallback = function (key, value, fn) {
       if (this.has(key)) {
         this.set(key, value);
@@ -12,7 +11,6 @@ export const MapExtensions = () => {
     };
   }
   if (Map.prototype.getKeyFromValueIsExists === undefined) {
-    // eslint-disable-next-line no-extend-native
     Map.prototype.getKeyFromValueIsExists = function (value) {
       let result;
       this.forEach((el, key) => {
@@ -24,7 +22,6 @@ export const MapExtensions = () => {
     };
   }
   if (Map.prototype.overrideValue === undefined) {
-    // eslint-disable-next-line no-extend-native
     Map.prototype.overrideValue = function (key, value) {
       const result = this.get(key);
 
@@ -32,22 +29,29 @@ export const MapExtensions = () => {
     };
   }
   if (Map.prototype.keysToJson === undefined) {
-    // eslint-disable-next-line no-extend-native
     Map.prototype.keysToJson = function () {
       const result: any[] = [];
       this.forEach((el) => result.push(el));
       return JSON.stringify(result);
     };
   }
+  if (Map.prototype.toArrayEntries === undefined) {
+    Map.prototype.toArrayEntries = function () {
+      const result = [];
+      for (const el of this.entries()) {
+        result.push({ key: el[0], value: el[1] });
+      }
+      return result;
+    };
+  }
   if (Map.prototype.toArray === undefined) {
-    // eslint-disable-next-line no-extend-native
     Map.prototype.toArray = function () {
       return Array.from(this.values());
     };
   }
-  if (Map.prototype.getPredicateValue === undefined) {
-    // eslint-disable-next-line no-extend-native
-    Map.prototype.getPredicateValue = function (callBack) {
+   
+  if (Map.prototype.getPredicateKey === undefined) {
+    Map.prototype.getPredicateKey = function (callBack) {
       const result: any[] = [];
       this.forEach((el, key) => {
         const callBackExecute = callBack(el);
@@ -56,6 +60,15 @@ export const MapExtensions = () => {
         }
       });
       return result;
+    };
+  }
+  if (Map.prototype.incrementValue === undefined) {
+    Map.prototype.incrementValue = function (key) {
+      if (this.get(key)) {
+        this.set(key, this.get(key) + 1);
+      } else {
+        this.set(key, 1);
+      }
     };
   }
 };
