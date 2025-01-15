@@ -19,9 +19,11 @@ export interface IBaseDocument<T> {
 
 export type BaseDocumentTypes = void | String;
 
+
+
 export class BaseDocument<T> extends ValidationModel implements IBaseDocument<T> {
     _id: string;
-
+    syncQueue: number = 1;
     date: Date = new Date();
     status: StatusDocument = StatusDocument.NEW;
     body?: T | undefined;
@@ -31,18 +33,31 @@ export class BaseDocument<T> extends ValidationModel implements IBaseDocument<T>
         super()
         makeAutoObservable(this);
     }
+    queue: number = 0;
     static empty = () => new BaseDocument<BaseDocumentTypes>();
 }
+
+export enum DocumentsTypes {
+    syncProducts = 'Синхронизация продуктов',
+    syncTransactions = 'Синхронизация транзакций',
+    transactionsChain = 'Цепочка транзакций'
+}
+
 export class SyncProducts extends BaseDocument<void> {
     type: string = 'Синхронизация продуктов';
+    queue = 1;
 }
 export class SyncTransactions extends BaseDocument<void> {
     type: string = 'Синхронизация транзакций'
+    queue = 1;
 }
 export class NewTransactionsChain extends BaseDocument<string> {
+    queue = 2;
     type: string = 'Цепочка транзакций';
     body = `{
-        "transaction":\${<TransactionChain/>:OBJECT:{"productTotal": 0, "productSKU":null, "productName":null,"productionCostsPerBatch":null }
+        "transaction":\${<TransactionChain/>:OBJECT:{"productSKU":null, "productName":null },
+        "productTotal": \${всего продуктов:number:0},
+        "productionCostsPerBatch": \${стоимость одного продукта:number:0}
     }`;
 }
 

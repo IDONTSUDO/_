@@ -5,9 +5,16 @@ export interface IDocumentsDataBaseModel {
     type: string;
     date: Date;
     status: string;
+    body: any;
+    queue: number;
+    syncQueue: number;
+    error: any;
 }
 
-export const DocumentDbSchema = new Schema({
+export const DocumentDbSchema = new Schema<IDocumentsDataBaseModel>({
+    error: {
+        type: Schema.Types.Mixed,
+    },
     type: {
         type: String,
     },
@@ -20,6 +27,12 @@ export const DocumentDbSchema = new Schema({
     },
     body: {
         type: Schema.Types.Mixed,
+    },
+    queue: {
+        type: Number,
+    },
+    syncQueue: {
+        type: Number,
     }
 });
 

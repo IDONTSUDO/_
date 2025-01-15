@@ -2,6 +2,9 @@ import { ObjectId } from "mongoose";
 import { OzonHttpApiRepository } from "../../core/repository/ozon_http_api_repository";
 import { ProductDBModel } from "../products/product_database_model";
 
+
+
+
 export class SyncMarketPlaceProductsUsecase {
   ozonHttpRepository: OzonHttpApiRepository;
   storeId: string;
@@ -12,6 +15,7 @@ export class SyncMarketPlaceProductsUsecase {
   call = async () => {
     try {
       (await this.ozonHttpRepository.getProducts()).map(async (products) => {
+      
         for await (const el of products.result.items) {
           let productDbModel = await ProductDBModel.findOne({ sku: el.product_id });
           if (productDbModel === null) {

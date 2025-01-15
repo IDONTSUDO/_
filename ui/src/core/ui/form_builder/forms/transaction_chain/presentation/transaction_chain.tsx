@@ -23,6 +23,7 @@ export const TransactionChain = observer(
         ) : (
           <>
             <CoreSelect
+              isInput={true}
               items={store.products.map((el) => el.name)}
               value={store.viewModel?.productName ?? ""}
               label={"Товар для расчета"}
@@ -32,41 +33,14 @@ export const TransactionChain = observer(
                   .map(
                     (el) => (
                       store.updateForm({ productName: el.name }),
-                      store.updateForm({ productSKU: el.sku })
+                      store.updateForm({ productSKU: el.sku }),
+                      props.onChange(JSON.stringify(store.viewModel))
                     )
                   )
               }
             />
-            <CoreInput
-              error="Только числа"
-              label="затраты на единицу продукции"
-              value={store.viewModel?.productionCostsPerBatch?.toString()}
-              validation={Number().isValid}
-              onChange={(text) =>
-                store.updateForm({ productionCostsPerBatch: Number(text) })
-              }
-            />
-            <CoreInput
-              error="Только числа"
-              label="количество продукции"
-              value={store.viewModel?.productTotal?.toString()}
-              validation={Number().isValid}
-              onChange={(text) =>
-                store.updateForm({ productTotal: Number(text) })
-              }
-            />
           </>
         )}
-        <div style={{ height: 50 }} />
-        <CoreButton
-          style={{ width: 200 }}
-          text="форма заполнена"
-          onClick={async () =>
-            (await store.viewModel.validMessage<TransactionChainStore>()).map(
-              (el) => props.onChange(el)
-            )
-          }
-        />
       </div>
     );
   }

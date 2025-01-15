@@ -1,11 +1,13 @@
 import React from "react";
 import { CoreText, CoreTextType } from "../text/text";
+import { Select } from "antd";
 
 export const CoreSelect = (props: {
   items: string[];
   value: string;
   label: string;
   onChange: (value: string, index: number) => void;
+  isInput?: boolean;
   style?: React.CSSProperties;
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
@@ -22,13 +24,16 @@ export const CoreSelect = (props: {
 
     setWidth(Number(ref.current?.clientWidth));
   }, [ref, setCursorIsCorses]);
-
+  const input = (text: string) => {
+    console.log(text);
+    // setValue(text);
+  };
   return (
     <div ref={ref} style={props.style}>
       <div
         style={{
           backgroundColor: "rgba(230, 224, 233, 1)",
-          height: 58,
+          // height: 58,
           borderRadius: "4px 4px 0px 0px",
           borderBottom: "solid 1px black",
           padding: "10px 10px 10px 10px",
@@ -40,8 +45,11 @@ export const CoreSelect = (props: {
             fontSize: 16,
             fontFamily: "Roboto",
             color: "#1D1B20",
-            height: 24,
+            // height: 24,
           }}
+          // @ts-expect-error
+          onInput={(event) => input(event.target.innerText)}
+          contentEditable={props.isInput}
         >
           {value}
         </div>
@@ -56,7 +64,7 @@ export const CoreSelect = (props: {
       >
         <div
           style={{
-            position: "relative",
+            position: "absolute",
             width: width,
             backgroundColor: "rgba(230, 224, 233, 1)",
           }}
@@ -67,6 +75,7 @@ export const CoreSelect = (props: {
                   key={i}
                   onClick={() => {
                     setValue(el);
+                    setCursorIsCorses(false);
                     props.onChange(el, i);
                   }}
                   style={{

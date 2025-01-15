@@ -2,6 +2,7 @@ import { IsString } from "class-validator";
 import { IShop } from "./shop_database_model";
 
 export class ShopValidationModel implements IShop {
+  productSyncLastId: string;
   lastParseTransactionPage: number;
   lastMonthTransaction: number;
   lastProcessedTransactionIndex: number;

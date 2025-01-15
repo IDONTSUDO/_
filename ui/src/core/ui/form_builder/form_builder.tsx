@@ -22,6 +22,7 @@ export const FormBuilder = observer(
     const [store] = React.useState(() => new FormBuilderStore());
 
     React.useEffect(() => {
+      console.log(props.formBuilder);
       store.init(props.formBuilder.context, props.formBuilder.result);
       if (props.formBuilder.form.isNotEmpty()) {
         store.formViewModel = new FormViewModel(

@@ -3,7 +3,8 @@ import { Result } from "../helper/result";
 import { UiBaseError } from "../model/ui_base_error";
 import { message } from "antd";
 import { ClassConstructor, plainToInstance } from "class-transformer";
-import { HttpError } from "../repository/http_repository";
+import { CrudHttpRepository, HttpError } from "../repository/http_repository";
+import { ValidationModel } from "../model/validation_model";
 
 export type CoreError = HttpError | Error;
 
@@ -116,9 +117,13 @@ export abstract class UiDrawerFormState<V, E> extends DrawerState<E> {
 }
 export abstract class FormState<V, E> extends UiErrorState<E> {
   abstract viewModel: V;
+
+  updateFormCallback = () => {
+  }
   updateForm(value: Partial<V>) {
     //@ts-ignore
     this.viewModel = Object.assign(this.viewModel, value);
+    this.updateFormCallback()
   }
   loadDependency = (viewModel: V | undefined) => {
     if (viewModel) this.viewModel = viewModel;
@@ -140,3 +145,23 @@ export abstract class FormState<V, E> extends UiErrorState<E> {
   };
 }
 
+export abstract class CrudFormStore<V extends ValidationModel, E, R extends CrudHttpRepository<V>> extends FormState<V, E> {
+  page: number = 0;
+  models?: V[];
+  abstract repository: R;
+  create = (model: V) => this.repository.addModel(model);
+  delete = (id: string) => this.repository.deleteModel(id);
+  update = (model: V) => this.repository.edit(model);
+  read = () => this.repository.getPage(this.page)
+  nextPage = async () => {
+    this.page = this.page += 1;
+    await this.mapOk('models', this.read())
+  }
+  prevPage = async () => {
+    this.page = this.page -= 1;
+    await this.mapOk('models', this.read())
+  }
+  async initCrud() {
+    await this.mapOk('models', this.read())
+  }
+}

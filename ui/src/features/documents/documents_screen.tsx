@@ -11,6 +11,7 @@ import { ButtonV2 } from "../../core/ui/button/button_v2";
 import { FormBuilder } from "../../core/ui/form_builder/form_builder";
 import { FormBuilderValidationModel } from "../../core/model/form_builder_validation_model";
 import { DocumentViewScreenPath } from "../document_view/document_view_screen";
+import { CorePagination } from "../../core/ui/pagination/core_pagination";
 
 export const DocumentsScreenPath = "/documents";
 export const DocumentsScreen = observer(() => {
@@ -53,19 +54,26 @@ export const DocumentsScreen = observer(() => {
               >
                 <div
                   style={{
-                    padding: 10,
-                    background: match(el.status)
-                      .with(StatusDocument.AWAIT, () => "red")
-                      .with(StatusDocument.END, () => "")
-                      .with(StatusDocument.NEW, () => "")
-                      .with(StatusDocument.ERROR, () => "")
-                      .otherwise(() => undefined),
+                    display: "flex",
+                    height: "100%",
+                    alignItems: "center",
                   }}
                 >
-                  {el.status}
+                  <div
+                    style={{
+                      padding: 10,
+                      background: match(el.status)
+                        .with(StatusDocument.AWAIT, () => "red")
+                        .with(StatusDocument.END, () => "")
+                        .with(StatusDocument.NEW, () => "")
+                        .with(StatusDocument.ERROR, () => "")
+                        .otherwise(() => undefined),
+                    }}
+                  >
+                    {el.status}
+                  </div>
+                  <div style={{ paddingRight: 10 }}>{el.type}</div>
                 </div>
-
-                <div style={{ paddingRight: 10 }}>{el.type}</div>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   {el.body !== undefined ? (
                     <>
@@ -163,8 +171,8 @@ export const DocumentsScreen = observer(() => {
             />
           </>
         }
-        bottom={<>132</>}
-        page={MenuItems.EMPTY}
+        bottom={<CorePagination store={store} />}
+        page={MenuItems.DOCUMENTS}
       />
     </>
   );

@@ -1,19 +1,19 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../../core/helper/use_store";
-import { CoreButton } from "../../core/ui/button/button";
 import { CoreText, CoreTextType } from "../../core/ui/text/text";
-import { TransactionStore } from "./transactions_store";
 import { CTable } from "@coreui/react";
 import { Loader } from "../../core/ui/loader/loader";
-import { CoreMenu, MenuItems } from "../../core/ui/menu/menu";
+import { ProductsStore } from "./product_store";
 import { CorePagination } from "../../core/ui/pagination/core_pagination";
+import { CoreMenu, MenuItems } from "../../core/ui/menu/menu";
 
-export const TransactionsScreenPath = "/transactions";
-export const TransactionsScreen = observer(() => {
-  const store = useStore(TransactionStore);
+export const ProductsScreenPath = "/products";
+export const ProductsScreen = observer(() => {
+  const store = useStore(ProductsStore);
   return (
     <CoreMenu
-      page={MenuItems.TRANSACTIONS}
+      page={MenuItems.STORES}
+      bottom={<CorePagination store={store} />}
       children={
         <div
           style={{
@@ -26,7 +26,7 @@ export const TransactionsScreen = observer(() => {
           <CoreText
             style={{ alignSelf: "center" }}
             type={CoreTextType.largeV2}
-            text="Транзакции"
+            text="Продукция"
           />
           <div style={{ height: "100%" }}>
             {store.isLoading && store.models !== undefined ? (
@@ -36,28 +36,15 @@ export const TransactionsScreen = observer(() => {
                 <CTable
                   columns={[
                     {
-                      key: "sum",
-                      label: "Сумма",
-                      _props: { scope: "col" },
-                    },
-                    {
-                      key: "NameProduct",
-                      label: "Имя продукта",
-                      _props: { scope: "col" },
-                    },
-                    {
-                      key: "TypeOperation",
-                      label: "Тип операции",
+                      key: "name",
+                      label: "Название",
                       _props: { scope: "col" },
                     },
                   ]}
                   items={store.models?.map((el) => {
+                    console.log(200);
                     return {
-                      id: 1,
-                      sum: el.amount.toString() ?? "Mark",
-                      NameProduct: el.productName,
-                      TypeOperation: el.operationType,
-                      _cellProps: { id: { scope: "row" } },
+                      name: el.name,
                     };
                   })}
                 />
@@ -66,7 +53,6 @@ export const TransactionsScreen = observer(() => {
           </div>
         </div>
       }
-      bottom={<CorePagination store={store} />}
     />
   );
 });

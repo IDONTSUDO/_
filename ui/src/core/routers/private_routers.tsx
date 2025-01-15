@@ -7,6 +7,10 @@ import {
   DocumentsScreenPath,
 } from "../../features/documents/documents_screen";
 import {
+  ProductsScreen,
+  ProductsScreenPath,
+} from "../../features/products/products_screen";
+import {
   ShopsScreen,
   ShopsScreenPath,
 } from "../../features/shops/shops_screen";
@@ -22,7 +26,11 @@ export const privateRouters: IRouter[] = [
     element: <ShopsScreen />,
   },
   {
-    path: DocumentViewScreenPath + '/' + ':id',
+    path: DocumentViewScreenPath + "/" + ":id",
     element: <DocumentViewScreen />,
+  },
+  {
+    path: ProductsScreenPath,
+    element: <ProductsScreen />,
   },
 ];

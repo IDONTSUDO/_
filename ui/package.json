@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@coreui/react": "^5.4.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -15,6 +16,7 @@
     "antd": "^4.24.15",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
+    "just-clone": "^6.2.0",
     "mobx": "^6.10.0",
     "mobx-react-lite": "^4.0.4",
     "mobx-store-inheritance": "^1.0.6",
@@ -25,7 +27,8 @@
     "react-scripts": "5.0.1",
     "reflect-metadata": "^0.1.13",
     "ts-pattern": "^5.1.1",
-    "typescript": "^5.4"
+    "typescript": "^5.4",
+    "uuid": "^11.0.5"
   },
   "scripts": {
     "dev": "react-scripts start",

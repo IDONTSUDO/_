@@ -4,11 +4,13 @@ import React from "react";
 import { ShopsScreenPath } from "../../../features/shops/shops_screen";
 import { TransactionsScreenPath } from "../../../features/transactions/transactions_screen";
 import { useNavigate } from "react-router-dom";
+import { ProductsScreenPath } from "../../../features/products/products_screen";
 
 export enum MenuItems {
   STORES = "Магазины",
   TRANSACTIONS = "Транзакции",
-  EMPTY = "",
+  DOCUMENTS = "Документы",
+  PRODUCTS = "PRODUCTS",
 }
 interface CoreMenuProps {
   page: MenuItems;
@@ -30,12 +32,17 @@ export const CoreMenu = (props: CoreMenuProps) => {
   }, [isOpen]);
 
   const page = [
-    { page: MenuItems.EMPTY, name: "", path: null },
+    { page: MenuItems.DOCUMENTS, name: MenuItems.DOCUMENTS, path: null },
     { page: MenuItems.STORES, name: MenuItems.STORES, path: ShopsScreenPath },
     {
       page: MenuItems.TRANSACTIONS,
       name: MenuItems.TRANSACTIONS,
       path: TransactionsScreenPath,
+    },
+    {
+      page: MenuItems.PRODUCTS,
+      name: MenuItems.PRODUCTS,
+      path: ProductsScreenPath,
     },
   ];
   return (
@@ -48,11 +55,15 @@ export const CoreMenu = (props: CoreMenuProps) => {
           textAlign: "center",
         }}
         ref={ref}
+      ></div>
+      <div
+        style={{ position: "absolute", top: 50, left: 10 }}
+        onClick={() => navigate(-1)}
       >
-        {props.page}
-        
+        <div style={{ padding: 10, border: "1px solid", width: "min-content" }}>
+          Назад
+        </div>
       </div>
-
       <input
         onClick={() => {
           setOpen(!isOpen);
@@ -77,7 +88,9 @@ export const CoreMenu = (props: CoreMenuProps) => {
           ))}
         </ul>
       </div>
-      <div style={{ position: "absolute", bottom: 0 }}>{props.bottom}</div>
+      <div style={{ position: "absolute", bottom: 0, width: "100vw" }}>
+        {props.bottom}
+      </div>
       <div>{props.children}</div>
     </>
   );

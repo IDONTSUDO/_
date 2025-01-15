@@ -54,11 +54,10 @@ const getStyle = (type: CoreTextType, color: string | undefined) => {
   if (type.isEqual(CoreTextType.largeV2))
     return {
       color: color ?? "rgba(73, 69, 79, 1)",
-
       alignContent: "center",
       fontWeight: 500,
-      fontSize: 14,
-      lineHeight: "20px",
+      fontSize: 50,
+      // lineHeight: "20px",
     };
   if (type.isEqual(CoreTextType.small))
     return {
@@ -135,6 +134,7 @@ export function CoreText(props: ITextProps) {
       }}
       style={appendStyle(props.type, props.color, props.style, props.fontType)}
       onInput={(event) => {
+        console.log(event);
         if (props.onChange) {
           // @ts-expect-error
           props.onChange(event.target.innerText);

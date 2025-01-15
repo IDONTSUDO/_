@@ -6,7 +6,7 @@ import { DeleteShopUseCase } from "./delete_shop_usecase";
 export class CreateNewShopPresentation extends CrudController<ShopValidationModel, typeof ShopDBModel> {
   constructor() {
     super({
-      url: "shop",
+      url: "shops",
       validationModel: ShopValidationModel,
       databaseModel: ShopDBModel,
     });

@@ -6,6 +6,7 @@ export interface ITransactionDataBaseModel {
   operationId: number;
   amount: number;
   isApply: boolean;
+  date: Date;
   skuProduct: number[];
   unixDate: number;
   operationType: string;
@@ -24,6 +25,9 @@ export const TransactionSchema = new Schema({
   },
   amount: {
     type: Number,
+  },
+  date: {
+    type: Date,
   },
   operationType: {
     type: String,

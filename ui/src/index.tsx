@@ -1,6 +1,6 @@
-
 import "reflect-metadata";
 import "antd/dist/antd.min.css";
+import "@coreui/coreui/dist/css/coreui.min.css";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "reflect-metadata";
@@ -15,6 +15,8 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 export const themeStore = new ThemeStore();
+
+ 
 
 root.render(
   <>

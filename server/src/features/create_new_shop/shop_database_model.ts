@@ -8,6 +8,7 @@ export interface IShop {
   lastParseTransactionPage: number;
   lastMonthTransaction: number;
   lastProcessedTransactionIndex: number;
+  productSyncLastId: string;
 }
 export const ShopSchema = new Schema({
   shopName: {
@@ -30,6 +31,10 @@ export const ShopSchema = new Schema({
   lastProcessedTransactionIndex: {
     type: Number,
     default: 0,
+  },
+  productSyncLastId: {
+    type: String,
+    default: ''
   },
 });
 

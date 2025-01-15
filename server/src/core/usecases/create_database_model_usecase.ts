@@ -11,7 +11,7 @@ export class CreateDataBaseModelUseCase<V> {
   call = async (validationModel: V): Promise<Result<Error, ICreateObjectDataBase>> => {
     try {
       const result = new this.databaseModel(validationModel);
-
+      console.log(validationModel);
       return Result.ok({ id: String((await result.save())._id) });
     } catch (error) {
       return Result.error(error);
