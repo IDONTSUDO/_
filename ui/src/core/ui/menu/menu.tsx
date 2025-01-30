@@ -88,10 +88,8 @@ export const CoreMenu = (props: CoreMenuProps) => {
           ))}
         </ul>
       </div>
-      <div style={{ position: "absolute", bottom: 0, width: "100vw" }}>
-        {props.bottom}
-      </div>
       <div>{props.children}</div>
+      {/* <div style={{ width: "100vw" }}>{props.bottom}</div> */}
     </>
   );
 };

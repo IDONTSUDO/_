@@ -22,14 +22,15 @@ export class ValidationModel {
         if (error.constraints) result += Object.values(error.constraints).join(", ");
         return result;
       });
-
       return Result.error(message.join(", \n"));
     } else {
       return Result.ok(this as unknown as T);
     }
   };
+
   validMessage = async<T>(): Promise<Result<string, T>> => {
     const result = await this.valid<T>();
+
     if (result.isFailure()) {
       message.error(result.error);
     }

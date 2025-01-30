@@ -5,8 +5,8 @@ import { NavigateFunction } from "react-router-dom";
 import { DocumentViewHttpRepository } from "./document_view_http_repository";
 import { FormBuilderValidationModel } from "../../core/model/form_builder_validation_model";
 
-export class DocumentViewStore extends FormState<BaseDocument<BaseDocumentTypes>, any> {
-    viewModel: BaseDocument<BaseDocumentTypes>;
+export class DocumentViewStore extends FormState<BaseDocument, any> {
+    viewModel: BaseDocument;
     formBuilderModel?: FormBuilderValidationModel;
     navigate?: NavigateFunction;
     documentViewHttpRepository: DocumentViewHttpRepository = new DocumentViewHttpRepository();
@@ -21,8 +21,8 @@ export class DocumentViewStore extends FormState<BaseDocument<BaseDocumentTypes>
     async initParam(id: string) {
         await this.mapOk('viewModel', this.documentViewHttpRepository.getDoc(id))
         if (this.viewModel !== undefined) {
-            const result = JSON.parse(this.viewModel.body as string);
-            this.formBuilderModel = new FormBuilderValidationModel(result.context, result.result, result.form, result.output,)
+            // const result = JSON.parse(this.viewModel.body);
+            // this.formBuilderModel = new FormBuilderValidationModel(result.context, result.result, result.form, result.output,)
         }
     }
 

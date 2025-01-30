@@ -9,6 +9,7 @@ export interface IDocumentsDataBaseModel {
     queue: number;
     syncQueue: number;
     error: any;
+    result: any;
 }
 
 export const DocumentDbSchema = new Schema<IDocumentsDataBaseModel>({
@@ -33,6 +34,9 @@ export const DocumentDbSchema = new Schema<IDocumentsDataBaseModel>({
     },
     syncQueue: {
         type: Number,
+    },
+    result: {
+        type: Schema.Types.Mixed,
     }
 });
 

@@ -11,6 +11,3 @@ const cronProcess: CronController[] = [new SyncMarketPlacePresentation()];
 extensions();
 new App(httpRoutes, [], cronProcess).listen();
 
-// (async () => {
-//     new SyncDocumentsUseCase().call()
-// })()

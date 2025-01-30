@@ -111,21 +111,7 @@ export const DocumentsScreen = observer(() => {
                     }}
                   >
                     {store.form !== undefined ? (
-                      <>
-                        <FormBuilder
-                          formBuilder={
-                            new FormBuilderValidationModel(
-                              "",
-                              store.form ?? "",
-                              [],
-                              ""
-                            )
-                          }
-                          onChange={(change: FormBuilderValidationModel) =>
-                            store.updateForm({ body: JSON.stringify(change) })
-                          }
-                        />
-                      </>
+                      <>{store.form}</>
                     ) : (
                       <>
                         {types.map((el) => (
@@ -149,23 +135,7 @@ export const DocumentsScreen = observer(() => {
                       </>
                     )}
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "center",
-                      padding: 10,
-                    }}
-                  >
-                    <CoreButton
-                      text="создать"
-                      onClick={() => store.clickOnCreate()}
-                    />
-                    <div style={{ width: 50 }} />
-                    <CoreButton
-                      text="отменить"
-                      onClick={() => store.modalCancel()}
-                    />
-                  </div>
+                  
                 </div>
               }
             />

@@ -9,11 +9,10 @@ import { ReadByIdDataBaseModelUseCase } from "../../core/usecases/read_database_
 import { GetTheLargestNumberFromACollectionUseCase } from "../../core/usecases/get_the_largest_number_from_a_collection_model_usecase";
 import { ShopDBModel } from "../create_new_shop/shop_database_model";
 import { OzonHttpApiRepository, OzonHttpMockRepository } from "../../core/repository/ozon_http_api_repository";
-import { IProduct, ProductDBModel } from "../products/product_database_model";
-import { FindPredicateModelAndUpdateDatabaseModelUseCase } from "../../core/usecases/find_and_update_database_model_usecase";
-import { CreateDataBaseModelUseCase } from "../../core/usecases/create_database_model_usecase";
+import { ProductDBModel } from "../products/product_database_model";
 import { ObjectId } from "mongoose";
 import { TransactionDBModel } from "../sync_marketplace_transactions/trasaction_database_model";
+import { SyncTransactionModel } from "./model/sync_transaction_model";
 
 
 export enum StatusDocument {
@@ -65,35 +64,47 @@ export class SyncProductsUseCase {
     }
 }
 
+function dateDiffInDays(a: Date, b: Date) {
+    const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+    // Discard the time and time-zone information.
+    const utc1 = Date.UTC(a.getFullYear(), a.getMonth(), a.getDate());
+    const utc2 = Date.UTC(b.getFullYear(), b.getMonth(), b.getDate());
+
+    return Math.floor((utc2 - utc1) / _MS_PER_DAY);
+}
+
+
 export class SyncTransactions {
-    call = async (): ResponseBase => {
+    call = async (result: SyncTransactionModel): ResponseBase => {
         const shop = await ShopDBModel.findOne();
         const ozonHttpApiRepository = new OzonHttpMockRepository(shop.clientId, shop.apiKey);
-        const date = new Date();
+        // result.startTransactionDay.
+        console.log(JSON.stringify(result));
+        console.log(dateDiffInDays(new Date(result.startTransactionDay), new Date(result.endTransactionDay)));
 
-        (await ozonHttpApiRepository.getTransactions(String(date.getFullYear()), String(date.getMonth() + 1), shop.lastParseTransactionPage)).fold(async (ozonPayment) => {
-            for await (const el of ozonPayment.result.operations.slice(
-                shop.lastParseTransactionPage,
-                ozonPayment.result.operations.length
-            )) {
-                if ((await TransactionDBModel.findOne({ operationId: el.operation_id })) === null) {
-                    const transaction = new TransactionDBModel();
-                    if (el.items.isNotEmpty() && el.amount) {
-                        transaction.amount = el.amount;
-                        transaction.operationId = el.operation_id;
-                        transaction.skuProduct = el.items.map((el) => el.sku).unique();
-                        transaction.storeId = shop._id as unknown as ObjectId;
-                        transaction.operationType = el.type;
-                        transaction.origin = el;
-                        transaction.productName = el.items.map((el) => el.name).join("");
-                        transaction.date = new Date();
-                        await transaction.save();
-                    }
-                }
-            }
-        }, async (e) => {
+        // (await ozonHttpApiRepository.getTransactions(String(date.getFullYear()), String(date.getMonth() + 1), shop.lastParseTransactionPage)).fold(async (ozonPayment) => {
+        //     for await (const el of ozonPayment.result.operations.slice(
+        //         shop.lastParseTransactionPage,
+        //         ozonPayment.result.operations.length
+        //     )) {
+        //         if ((await TransactionDBModel.findOne({ operationId: el.operation_id })) === null) {
+        //             const transaction = new TransactionDBModel();
+        //             if (el.items.isNotEmpty() && el.amount) {
+        //                 transaction.amount = el.amount;
+        //                 transaction.operationId = el.operation_id;
+        //                 transaction.skuProduct = el.items.map((el) => el.sku).unique();
+        //                 transaction.storeId = shop._id as unknown as ObjectId;
+        //                 transaction.operationType = el.type;
+        //                 transaction.origin = el;
+        //                 transaction.productName = el.items.map((el) => el.name).join("");
+        //                 transaction.date = new Date();
+        //                 await transaction.save();
+        //             }
+        //         }
+        //     }
+        // }, async (e) => {
 
-        }), (e) => console.log(e)
+        // }), (e) => console.log(e)
         return Result.ok(299)
     }
 }
@@ -121,7 +132,7 @@ export class SyncDocumentsUseCase extends CallbackStrategyWithEmpty {
                 case (DocumentsTypes.syncTransactions):
 
 
-                    (await new SyncTransactions().call()).fold(async (_) => {
+                    (await new SyncTransactions().call(element.result)).fold(async (_) => {
                         element.status = StatusDocument.END;
                         await element.save()
                     }, async (error) => {

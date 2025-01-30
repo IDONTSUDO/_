@@ -6,53 +6,35 @@ import { Loader } from "../../core/ui/loader/loader";
 import { ProductsStore } from "./product_store";
 import { CorePagination } from "../../core/ui/pagination/core_pagination";
 import { CoreMenu, MenuItems } from "../../core/ui/menu/menu";
+import { CrudPage } from "../../core/ui/page/crud_page";
+import { CoreInput } from "../../core/ui/input/input";
+import { CoreButton } from "../../core/ui/button/button";
+import { ProductModel } from "./product_model";
 
 export const ProductsScreenPath = "/products";
 export const ProductsScreen = observer(() => {
   const store = useStore(ProductsStore);
   return (
-    <CoreMenu
-      page={MenuItems.STORES}
-      bottom={<CorePagination store={store} />}
-      children={
-        <div
-          style={{
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
-          }}
-        >
-          <CoreText
-            style={{ alignSelf: "center" }}
-            type={CoreTextType.largeV2}
-            text="Продукция"
+    <CrudPage
+      pageName={MenuItems.PRODUCTS}
+      store={store}
+      missingKey={["storeId", "__v", "_id", "images"]}
+      instanceModel={ProductModel}
+      editableComponent={
+        <>
+          <CoreInput
+            label="себе стоймость"
+            value={store.viewModel?.costPrice?.toString() ?? ""}
+            onChange={(text) => store.updateForm({ costPrice: Number(text) })}
           />
-          <div style={{ height: "100%" }}>
-            {store.isLoading && store.models !== undefined ? (
-              <Loader />
-            ) : (
-              <>
-                <CTable
-                  columns={[
-                    {
-                      key: "name",
-                      label: "Название",
-                      _props: { scope: "col" },
-                    },
-                  ]}
-                  items={store.models?.map((el) => {
-                    console.log(200);
-                    return {
-                      name: el.name,
-                    };
-                  })}
-                />
-              </>
-            )}
-          </div>
-        </div>
+          <div style={{ height: 10 }} />
+          <CoreButton
+            text="сохранить"
+            onClick={() => store.update(store.viewModel)}
+          />
+        </>
       }
+      isEditable={true}
     />
   );
 });

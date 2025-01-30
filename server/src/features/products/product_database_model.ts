@@ -6,6 +6,7 @@ export interface IProduct {
   sku: number;
   images: string[];
   price: string;
+  costPrice: Number;
   storeId?: ObjectId;
 }
 
@@ -25,6 +26,10 @@ export const ProductSchema = new Schema({
     ref: schemaShop,
     autopopulate: false,
   },
+  costPrice: {
+    default: 0,
+    type: Number,
+  }
 });
 
 export const schemaProduct = "Product";
