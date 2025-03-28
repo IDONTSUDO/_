@@ -17,4 +17,9 @@ export class ShopsStore extends CrudFormStore<ShopModel, any, ShopsRepository> {
     closeModalHelper = () => {
         this.viewModel = ShopModel.empty();
     }
+    sss = async () => {
+        await this.create(this.viewModel);
+        this.modalCancel();
+
+    }
 }

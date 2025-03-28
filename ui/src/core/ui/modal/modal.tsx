@@ -31,7 +31,7 @@ export const ModalV2: React.FC<{
           border: `1px solid ${themeStore.theme.greenWhite}`,
           padding: 20,
           borderRadius: 5,
-          width: 400,
+          // width: 400,
           position: "relative",
         }}
       >

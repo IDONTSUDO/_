@@ -18,7 +18,7 @@ export const CorePagination: React.FC<{
     >
       <CoreButton
         text="назад"
-        style={{ height: 45 }}
+        // style={{ height: 'min-con' }}
         onClick={() => store.prevPage()}
       />
       <div style={{ width: 10 }} />
@@ -29,7 +29,7 @@ export const CorePagination: React.FC<{
       <div style={{ width: 10 }} />
       <CoreButton
         text="вперед"
-        style={{ height: 45 }}
+        // style={{ height: 45 }}
         onClick={() => store.nextPage()}
       />
     </div>

@@ -25,11 +25,16 @@ export const DocumentsScreen = observer(() => {
                 justifyContent: "space-between",
                 padding: 10,
                 border: "1px solid",
+                height: 150,
               }}
             >
-              <Icon height={40} type="sync" onClick={() => store.clickSync()} />
               <Icon
-                height={40}
+                height={100}
+                type="sync"
+                onClick={() => store.clickSync()}
+              />
+              <Icon
+                height={100}
                 type="plus-circle"
                 onClick={() => store.modalShow()}
               />
@@ -48,6 +53,7 @@ export const DocumentsScreen = observer(() => {
                   justifyContent: "space-between",
                   border: "1px solid",
                   alignItems: "center",
+                  height: 109,
                 }}
               >
                 <div
@@ -60,6 +66,9 @@ export const DocumentsScreen = observer(() => {
                   <div
                     style={{
                       padding: 10,
+                      height: "100%",
+                      fontSize: 28,
+                      alignContent: "center",
                       background: match(el.status)
                         .with(StatusDocument.AWAIT, () => "red")
                         .with(StatusDocument.END, () => "chartreuse")
@@ -70,7 +79,9 @@ export const DocumentsScreen = observer(() => {
                   >
                     {el.status}
                   </div>
-                  <div style={{ paddingRight: 10, paddingLeft: 10 }}>
+                  <div
+                    style={{ paddingRight: 10, paddingLeft: 10, fontSize: 38 }}
+                  >
                     {el.type}
                   </div>
                 </div>
@@ -78,7 +89,7 @@ export const DocumentsScreen = observer(() => {
                   {el.result !== undefined ? (
                     <>
                       <CoreButton
-                        text="посмотреть документ"
+                        text="посмотреть"
                         filled={true}
                         onClick={() =>
                           store.navigate?.(
@@ -92,7 +103,7 @@ export const DocumentsScreen = observer(() => {
                     <></>
                   )}
                   <Icon
-                    height={30}
+                    height={100}
                     type="delete_bucket"
                     onClick={() => store.clickDeleteDocument(el)}
                   />
@@ -118,14 +129,14 @@ export const DocumentsScreen = observer(() => {
                           <div
                             style={{
                               display: "flex",
-                              justifyContent: "space-around",
+                              justifyContent: "space-between",
                               padding: "10px",
                               border: store.viewModel?.type?.isEqual(el.type)
                                 ? "1px solid"
                                 : "",
                             }}
                           >
-                            <div>{el.type}</div>
+                            <div style={{fontSize:40}}>{el.type}</div>
                             <ButtonV2
                               text="выбрать"
                               onClick={() => store.selectTypeForm(el)}

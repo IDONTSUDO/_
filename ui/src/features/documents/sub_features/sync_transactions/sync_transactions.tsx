@@ -17,11 +17,31 @@ export const SyncTransactions: React.FC<IDocumentStore> = observer(
     }, []);
     return (
       <>
-        <CoreText text="загрузите exel" type={CoreTextType.large} />
-        <form id="uploadForm" encType="multipart/form-data">
-          <input ref={ref} type="file" id="fileInput" />
-        </form>
-
+        <CoreText
+          style={{ fontSize: 38 }}
+          text="загрузите exel"
+          type={CoreTextType.large}
+        />
+        {/* <form id="uploadForm" encType="multipart/form-data"    style={{
+              border: "1px solid #ccc;",
+              display: "inline-block;",
+              padding: "6px 12px;",
+              cursor: "pointer;",
+              height: 200,
+            }}>
+          <input
+            
+            ref={ref}
+            type="file"
+            id="fileInput"
+          />
+        </form> */}
+        <div style={{ height: 100 }} />
+        <label className="input-file">
+          <input ref={ref} type="file" name="file" />
+          <span className="input-file-btn">Выберите файл</span>
+        </label>
+        <div style={{ height: 100 }} />
         <div
           style={{
             display: "flex",

@@ -45,7 +45,7 @@ export const CoreInput = (props: {
       style={Object.assign(
         {
           backgroundColor: "rgba(230, 224, 233, 1)",
-          height: isSmall ? 40 : 58,
+          height: isSmall ? 40 : 100,
           borderRadius: "4px 4px 0px 0px",
           borderBottom: "solid 1px black",
           padding: "10px 10px 10px 10px",
@@ -55,7 +55,11 @@ export const CoreInput = (props: {
     >
       <CoreText
         type={CoreTextType.small}
-        style={isSmall ? { fontSize: 8, position: "relative", top: -8 } : {}}
+        style={
+          isSmall
+            ? { fontSize: 50, position: "relative", top: -8 }
+            : { fontSize: 30 }
+        }
         text={props.label}
       />
 
@@ -66,7 +70,7 @@ export const CoreInput = (props: {
           {
             backgroundColor: "#00008000",
             border: 1,
-            fontSize: isSmall ? 12 : 16,
+            fontSize: 30,
             fontFamily: "Roboto",
             color: "#1D1B20",
             height: 24,

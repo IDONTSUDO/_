@@ -22,7 +22,6 @@ export class AuthorizationStore {
   onTapLogin(): void {
     this.authorizationModel.isValid()?.fold(
       () => {
-        console.log(201)
         this.authorizationLocalStorageRepository.setAuthStatus();
         if (this.navigate) this.navigate(DocumentsScreenPath);
       },

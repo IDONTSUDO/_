@@ -26,10 +26,10 @@ export const CoreTable: React.FC<{
                 }>((element) => element.name === el)
                 .fold(
                   (v) => (
-                    <th>{v.replace}</th>
+                    <th style={{ fontSize: 20 }}>{v.replace}</th>
                   ),
                   () => (
-                    <th>{el}</th>
+                    <th style={{ fontSize: 20 }}>{el}</th>
                   )
                 )}
             </>
@@ -42,7 +42,7 @@ export const CoreTable: React.FC<{
             {Object.entries(el).map(([k, v], index) => {
               // @ts-ignore
               const item = el[indexed[index]?.name ?? ""];
-              return <td onClick={() => onClick?.(i)}>{item}</td>;
+              return <td style={{ fontSize: 20 }} onClick={() => onClick?.(i)}>{item}</td>;
             })}
           </tr>
         );

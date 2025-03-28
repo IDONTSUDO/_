@@ -25,6 +25,7 @@ export function CoreButton(props: {
             : props.filled
             ? ""
             : "1px solid black",
+          height: 100,
         },
         props.style
       )}
@@ -32,7 +33,15 @@ export function CoreButton(props: {
       <CoreText
         text={props.text ?? ""}
         type={CoreTextType.medium}
-        style={props.textStyle}
+        style={Object.assign(
+          {
+            fontSize: 40,
+            height: "100%",
+            alignContent: "center",
+            justifySelf: "center",
+          },
+          props.textStyle
+        )}
         color={
           props.block
             ? "#1D1B20"

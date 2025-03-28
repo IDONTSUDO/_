@@ -4,6 +4,8 @@ import { AuthorizationStore } from "./authorization_store";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { DocumentsScreenPath } from "../documents/documents_screen";
+import { CoreInput } from "../../core/ui/input/input";
+import { CoreButton } from "../../core/ui/button/button";
 
 export const AuthorizationScreenPath = "/auth";
 export const AuthorizationScreen = observer(() => {
@@ -18,17 +20,11 @@ export const AuthorizationScreen = observer(() => {
 
   return (
     <div style={{ margin: 40 }}>
-      <Input
-        onChange={(e) => store.changeLogin(e.target.value)}
-        placeholder="login"
-      />
       <div style={{ height: 20 }} />
-      <Input
-        onChange={(e) => store.changePassword(e.target.value)}
-        placeholder="password"
-      />
+      <CoreInput label={"login"} onChange={(e) => store.changeLogin(e)} />
+      <CoreInput label={"password"} onChange={(e) => store.changePassword(e)} />
       <div style={{ height: 20 }} />
-      <Button onClick={() => store.onTapLogin()}>login</Button>
+      <CoreButton text="login" onClick={() => store.onTapLogin()} />
       <div style={{ height: 20 }} />
     </div>
   );

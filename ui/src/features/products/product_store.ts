@@ -12,8 +12,13 @@ export class ProductsStore extends CrudFormStore<ProductModel, any, ProductsHttp
     }
     repository: ProductsHttpRepository = new ProductsHttpRepository();
     viewModel: ProductModel = ProductModel.empty();
+    models: ProductModel[] = [];
     async init(navigate?: NavigateFunction | undefined): Promise<any> {
-        this.initCrud()
+        this.initCrud();
+
+        (await this.repository.getPage()).map((models) => this.models = models);
+        
+        this.mapOk('models', this.repository.getPage())
     }
 
 

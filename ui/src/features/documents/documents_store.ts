@@ -14,6 +14,7 @@ export class DocumentsStore extends CrudFormStore<
   repository: DocumentsHttpRepository = new DocumentsHttpRepository();
   viewModel: BaseDocument = BaseDocument.empty();
   page = 0;
+
   documents: BaseDocument[] = [];
   navigate?: NavigateFunction;
   syncQueue?: ISyncQueue;

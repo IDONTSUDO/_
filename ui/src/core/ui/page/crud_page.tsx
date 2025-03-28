@@ -6,6 +6,7 @@ import { Loader } from "../loader/loader";
 import { observer } from "mobx-react-lite";
 import { CoreTable } from "../table/table";
 import { ModalV2 } from "../modal/modal";
+import { Icon } from "../icon/icon";
 
 export const CrudPage: React.FC<{
   store: CrudFormStore<any, any, any>;
@@ -14,6 +15,8 @@ export const CrudPage: React.FC<{
   instanceModel?: object;
   isEditable?: boolean;
   editableComponent?: React.ReactNode;
+  createButton?: boolean;
+  isNeedDelete?: boolean;
 }> = observer(
   ({
     store,
@@ -22,6 +25,8 @@ export const CrudPage: React.FC<{
     isEditable,
     editableComponent,
     instanceModel,
+    createButton,
+    isNeedDelete,
   }) => {
     return (
       <div style={{ overflowY: "hidden" }}>
@@ -40,8 +45,18 @@ export const CrudPage: React.FC<{
               <CoreText
                 style={{ alignSelf: "center" }}
                 type={CoreTextType.largeV2}
-                text="Продукция"
+                text={pageName}
               />
+              {createButton ? (
+                <Icon
+                  height={60}
+                  type="plus-circle"
+                  onClick={() => store.modalShow()}
+                />
+              ) : (
+                <></>
+              )}
+
               <div style={{ height: "100%" }}>
                 {store.isLoading &&
                 store.models !== undefined &&
@@ -57,6 +72,9 @@ export const CrudPage: React.FC<{
                           store.models?.at(index)
                         );
                         store.modalShow();
+                      }
+                      if (isNeedDelete) {
+                        store.delete(store.models?.at(index)._id  );
                       }
                     }}
                     columns={Object.keys(store.models?.at(0) ?? {}).filter(

@@ -9,7 +9,7 @@ export const TransactionsScreen = observer(() => {
   const store = useStore(TransactionStore);
   return (
     <CrudPage
-      pageName={MenuItems.STORES}
+      pageName={MenuItems.TRANSACTIONS}
       store={store}
       missingKey={[
         "productSyncLastId",

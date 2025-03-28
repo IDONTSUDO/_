@@ -5,6 +5,7 @@ import { ShopsScreenPath } from "../../../features/shops/shops_screen";
 import { TransactionsScreenPath } from "../../../features/transactions/transactions_screen";
 import { useNavigate } from "react-router-dom";
 import { ProductsScreenPath } from "../../../features/products/products_screen";
+import { DocumentsScreenPath } from "../../../features/documents/documents_screen";
 
 export enum MenuItems {
   STORES = "Магазины",
@@ -32,8 +33,16 @@ export const CoreMenu = (props: CoreMenuProps) => {
   }, [isOpen]);
 
   const page = [
-    { page: MenuItems.DOCUMENTS, name: MenuItems.DOCUMENTS, path: null },
-    { page: MenuItems.STORES, name: MenuItems.STORES, path: ShopsScreenPath },
+    {
+      page: MenuItems.DOCUMENTS,
+      name: MenuItems.DOCUMENTS,
+      path: DocumentsScreenPath,
+    },
+    {
+      page: MenuItems.STORES,
+      name: MenuItems.STORES,
+      path: ShopsScreenPath,
+    },
     {
       page: MenuItems.TRANSACTIONS,
       name: MenuItems.TRANSACTIONS,
@@ -78,7 +87,10 @@ export const CoreMenu = (props: CoreMenuProps) => {
         <ul style={{ color: "white" }}>
           {page.map((el) => (
             <li
-              style={el.name === props.page ? { backgroundColor: "black" } : {}}
+              style={Object.assign(
+                { fontSize: 36 },
+                el.name === props.page ? { backgroundColor: "black" } : {}
+              )}
               onClick={() => {
                 if (el.path) navigate(el.path);
               }}
