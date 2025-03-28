@@ -3,15 +3,18 @@ import { schemaShop } from "../create_new_shop/shop_database_model";
 
 export interface ITransactionDataBaseModel {
   storeId: ObjectId;
-  operationId: number;
+  operationId: string;
   amount: number;
   isApply: boolean;
   date: Date;
-  skuProduct: number[];
+  skuProduct: string;
   unixDate: number;
   operationType: string;
   origin: any;
   productName: string;
+  accrualType: string;
+  nameOfProductOrService: string;
+  quality: number;
 }
 
 export const TransactionSchema = new Schema({
@@ -21,7 +24,7 @@ export const TransactionSchema = new Schema({
     autopopulate: false,
   },
   operationId: {
-    type: Number,
+    type: String,
   },
   amount: {
     type: Number,
@@ -32,20 +35,21 @@ export const TransactionSchema = new Schema({
   operationType: {
     type: String,
   },
-  skuProduct: [Number],
-  isApply: {
-    type: Boolean,
-    default: false,
-  },
-  unixDate: {
-    type: Number,
-    default: () => Math.floor(Date.now() / 1000),
+  skuProduct: String,
+  quality: {
+    type: Number
   },
   origin: {
     type: Schema.Types.Mixed,
   },
   productName: {
     type: String,
+  },
+  nameOfProductOrService: {
+    type: String
+  },
+  accrualType: {
+    type: String
   },
 });
 

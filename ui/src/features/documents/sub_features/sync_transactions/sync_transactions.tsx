@@ -2,32 +2,26 @@ import { observer } from "mobx-react-lite";
 import { useStore } from "../../../../core/helper/use_store";
 import { SyncTransactionStore } from "./sync_transactions_store";
 import { IDocumentStore } from "../../../../core/model/document_store";
-import { DatePicker } from "antd";
-import moment from "moment";
 import { CoreButton } from "../../../../core/ui/button/button";
 import { CoreText, CoreTextType } from "../../../../core/ui/text/text";
+import { useEffect, useRef } from "react";
 
 export const SyncTransactions: React.FC<IDocumentStore> = observer(
   ({ documentStore }) => {
+    const ref = useRef<any>();
     const store = useStore(SyncTransactionStore);
+    useEffect(() => {
+      ref.current?.addEventListener("change", function () {
+        store.uploadFile(ref.current!.files);
+      });
+    }, []);
     return (
       <>
-        <CoreText text="Начало синхронизации" type={CoreTextType.header} />
-        <DatePicker
-          placeholder="начало отчета"
-          value={moment(store.viewModel.startTransactionDay)}
-          onChange={(value) =>
-            store.updateForm({ startTransactionDay: value?.toDate() })
-          }
-        />
-        <CoreText text="Конец синхронизации" type={CoreTextType.header} />
-        <DatePicker
-          placeholder="конец синхронизации"
-          value={moment(store.viewModel.endTransactionDay)}
-          onChange={(value) =>
-            store.updateForm({ endTransactionDay: value?.toDate() })
-          }
-        />
+        <CoreText text="загрузите exel" type={CoreTextType.large} />
+        <form id="uploadForm" encType="multipart/form-data">
+          <input ref={ref} type="file" id="fileInput" />
+        </form>
+
         <div
           style={{
             display: "flex",
@@ -37,7 +31,7 @@ export const SyncTransactions: React.FC<IDocumentStore> = observer(
         >
           <CoreButton
             text="создать"
-            onClick={() => documentStore.clickOnCreate(store.viewModel)}
+            onClick={() => store.uploadExel(documentStore.modalCancel)}
           />
           <div style={{ width: 50 }} />
           <CoreButton text="отменить" onClick={() => store.modalCancel()} />

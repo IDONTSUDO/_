@@ -164,5 +164,11 @@ export abstract class CrudFormStore<V extends ValidationModel, E, R extends Crud
   async initCrud() {
     await this.mapOk('models', this.read())
   }
+  async saveModalButton() {
+    await (await this.update(this.viewModel)).map(() => {
+      this.modalCancel();
+      this.initCrud();
+    });
 
+  }
 }

@@ -6,7 +6,7 @@ export interface IProduct {
   sku: number;
   images: string[];
   price: string;
-  costPrice: Number;
+  costPrice: number;
   storeId?: ObjectId;
 }
 

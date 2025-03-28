@@ -8,8 +8,6 @@ import { Icon } from "../../core/ui/icon/icon";
 import { ModalV2 } from "../../core/ui/modal/modal";
 import { CoreButton } from "../../core/ui/button/button";
 import { ButtonV2 } from "../../core/ui/button/button_v2";
-import { FormBuilder } from "../../core/ui/form_builder/form_builder";
-import { FormBuilderValidationModel } from "../../core/model/form_builder_validation_model";
 import { DocumentViewScreenPath } from "../document_view/document_view_screen";
 import { CorePagination } from "../../core/ui/pagination/core_pagination";
 
@@ -64,7 +62,7 @@ export const DocumentsScreen = observer(() => {
                       padding: 10,
                       background: match(el.status)
                         .with(StatusDocument.AWAIT, () => "red")
-                        .with(StatusDocument.END, () => "")
+                        .with(StatusDocument.END, () => "chartreuse")
                         .with(StatusDocument.NEW, () => "")
                         .with(StatusDocument.ERROR, () => "")
                         .otherwise(() => undefined),
@@ -72,10 +70,12 @@ export const DocumentsScreen = observer(() => {
                   >
                     {el.status}
                   </div>
-                  <div style={{ paddingRight: 10 }}>{el.type}</div>
+                  <div style={{ paddingRight: 10, paddingLeft: 10 }}>
+                    {el.type}
+                  </div>
                 </div>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  {el.body !== undefined ? (
+                  {el.result !== undefined ? (
                     <>
                       <CoreButton
                         text="посмотреть документ"
@@ -135,7 +135,6 @@ export const DocumentsScreen = observer(() => {
                       </>
                     )}
                   </div>
-                  
                 </div>
               }
             />

@@ -28,10 +28,7 @@ export const ProductsScreen = observer(() => {
             onChange={(text) => store.updateForm({ costPrice: Number(text) })}
           />
           <div style={{ height: 10 }} />
-          <CoreButton
-            text="сохранить"
-            onClick={() => store.update(store.viewModel)}
-          />
+          <CoreButton text="сохранить" onClick={async () => store.saveModalButton()} />
         </>
       }
       isEditable={true}

@@ -15,13 +15,17 @@ declare global {
     isNotEmpty(): boolean;
     unique(): Array<T>;
     sortFilter(predicate: (el: T) => boolean): Array<Array<T>>;
+
   }
+
   interface BufferConstructor {
     joinBuffers(buffers: Array<Buffer>, delimiter?: string);
   }
+
   interface Number {
     isNegative(): boolean;
     isPositive(): boolean;
+    exelToDate(): Date;
   }
   interface String {
     isEmpty(): boolean;

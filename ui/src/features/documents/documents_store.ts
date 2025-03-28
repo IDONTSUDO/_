@@ -48,14 +48,20 @@ export class DocumentsStore extends CrudFormStore<
       errorMessage: "ошибка синхронизации",
     });
   selectTypeForm = (el: BaseDocument): void => {
+    this.form = undefined;
     if (el.body != undefined) {
       this.form = el.body(this);
     }
     this.updateForm({ type: el.type });
+    if (this.form === undefined) {
+      this.repository.addModel(this.viewModel);
+      this.initCrud()
+    }
   };
   closeModalHelper = () => {
     this.viewModel = BaseDocument.empty();
     this.form = undefined;
+    this.modalCancel();
   };
   updateFormCallback = () =>
     (this.viewModel = Object.assign(this.viewModel, this.syncQueue));

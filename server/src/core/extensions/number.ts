@@ -9,4 +9,9 @@ export const NumberExtensions = () => {
       return this > 0;
     };
   }
+  if (Number.prototype.exelToDate === undefined) {
+    Number.prototype.exelToDate = function () {
+      return new Date(new Date(Date.UTC(1899, 11, 30)).getTime() + this * 24 * 60 * 60 * 1000);
+    }
+  }
 };

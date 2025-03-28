@@ -1,21 +1,40 @@
 export const CoreTable: React.FC<{
   columns: string[];
   source: object[];
+  replacedColumns?: { name: string; replace: string }[];
   onClick?: (index: number) => void;
-}> = ({ columns, source, onClick }) => {
+}> = ({ columns, source, onClick, replacedColumns }) => {
   const indexed = columns.map((el, i) => {
     return {
       name: el,
       index: i,
     };
   });
-  console.log(indexed);
+
   return (
     <table style={{ width: "100%" }}>
       <tr>
-        {columns.map((el) => (
-          <th>{el}</th>
-        ))}
+        {columns.map((el) =>
+          replacedColumns === undefined ? (
+            <th>{el}</th>
+          ) : (
+            <>
+              {replacedColumns
+                .rFind<{
+                  name: string;
+                  replace: string;
+                }>((element) => element.name === el)
+                .fold(
+                  (v) => (
+                    <th>{v.replace}</th>
+                  ),
+                  () => (
+                    <th>{el}</th>
+                  )
+                )}
+            </>
+          )
+        )}
       </tr>
       {source.map((el, i) => {
         return (

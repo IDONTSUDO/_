@@ -9,9 +9,10 @@ export class HttpRepository {
     this.serverUrl = serverURL;
   }
 
-  async jsonRequest<T>(url: string, method: HttpMethodType, reqBody?: any): Promise<Result<Error, T>> {
+  async jsonRequest<T>(url: string, method: HttpMethodType, reqBody?: any, skilServerUrl?: boolean): Promise<Result<Error, T>> {
     try {
-      const result = await axios(this.serverUrl + url, { method: method, data: reqBody });
+      const u  = skilServerUrl ? url : this.serverUrl + url;
+      const result = await axios(u, { method: method, data: reqBody });
 
       if (result.status !== 200) {
         return Result.error(Error("status code" + String(result.status)));

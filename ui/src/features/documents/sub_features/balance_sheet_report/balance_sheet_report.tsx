@@ -14,22 +14,15 @@ export const BalanceSheetReport: React.FC<IDocumentStore> = observer(
 
     return (
       <>
-        <CoreText text="Начало отчета" type={CoreTextType.header} />
+        <CoreText text="День для отчета" type={CoreTextType.header} />
         <DatePicker
-          placeholder="начало отчета"
-          value={moment(store.viewModel.beginReportDate)}
+          placeholder="День для отчета"
+          defaultValue={moment(store.viewModel.beginReportDate)}
           onChange={(value) =>
             store.updateForm({ beginReportDate: value?.toDate() })
           }
         />
-        <CoreText text="Конец отчета" type={CoreTextType.header} />
-        <DatePicker
-          placeholder="конец отчета"
-          value={moment(store.viewModel.endReportDate)}
-          onChange={(value) =>
-            store.updateForm({ endReportDate: value?.toDate() })
-          }
-        />
+       
         <div
           style={{
             display: "flex",

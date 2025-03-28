@@ -4,7 +4,7 @@ import { Schema } from "mongoose";
 
 export class ProductValidationModel implements IProduct {
   @IsNumber()
-  costPrice: Number;
+  costPrice: number;
   images: string[];
   price: string;
   storeId?: Schema.Types.ObjectId;

@@ -4,12 +4,9 @@ import { ValidationModel } from "../../../../core/model/validation_model";
 export class BalanceSheetReportModel extends ValidationModel {
     @IsDate()
     beginReportDate: Date;
-    @IsDate()
-    endReportDate: Date;
-    constructor(beginReportDate: Date, endReportDate: Date) {
+    constructor(beginReportDate: Date) {
         super();
         this.beginReportDate = beginReportDate;
-        this.endReportDate = endReportDate;
     }
-    static empty = () => new BalanceSheetReportModel(new Date(), new Date())
+    static empty = () => new BalanceSheetReportModel(new Date())
 }
