@@ -2,3 +2,4 @@ p.json
 p.ts
 
 node_modules
+package-lock.json
