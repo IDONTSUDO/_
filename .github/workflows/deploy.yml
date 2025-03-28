@@ -34,4 +34,4 @@ jobs:
         eval $(ssh-agent -s)
         echo "$KEY" | tr -d '\r' | ssh-add - > /dev/null
         ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
-        rsync -r --delete-after /ui/build/ $USER@$HOST:/root/_/ui/build
+        rsync -r --delete-after ./_/ui/build/ $USER@$HOST:/root/_/ui/build
