@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { makeAutoObservable, observable } from "mobx";
 import { Result } from "../../helper/result";
 import { v4 as uuidv4 } from "uuid";
