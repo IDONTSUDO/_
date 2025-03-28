@@ -3,7 +3,7 @@ name: Deploy React App
 on:
   push:
     branches:
-    - main # или другая ветка, с которой вы работаете
+    - main
 
 jobs:
   build:
