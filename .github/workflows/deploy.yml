@@ -68,7 +68,7 @@ jobs:
         ssh-keyscan -H 147.45.245.201 >> ~/.ssh/known_hosts
     - name: echo
       run: |
-        cat ~/.ssh/id_rsa  
+        cat  ~/.ssh/id_rsa  
     - name: Create a file on the server
       run: |+
         ssh root@147.45.245.201 "echo 'Hello, World!' > /root/file.txt"
