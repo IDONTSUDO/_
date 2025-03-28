@@ -1,27 +1,38 @@
-name: Deploy to Server
+name: Deploy React App
+
 on:
   push:
     branches:
-    - main
+    - main # или другая ветка, с которой вы работаете
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: echo key
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14' # Замените на нужную версию Node.js
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build
+      run: npm run build
+
+    - name: Deploy
+      env:
+        HOST: ${{ secrets.HOST }} # Адрес вашего сервера
+        USER: ${{ secrets.USER }} # Имя пользователя на сервере
+        KEY: ${{ secrets.PM2_PRIVATE_KEY }} # SSH ключ для доступа
       run: |
-        echo ${{ secrets.PM2_PUBLIC_KEY }}
-    - name: Set up SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H 147.45.245.201 >> ~/.ssh/known_hosts
-    - name: echo
-      run: |
-        cat  ~/.ssh/id_rsa  
-    - name: Create a file on the server
-      run: |+
-        ssh root@147.45.245.201 "echo 'Hello, World!' > /root/file.txt"
-         
+        # Установите ssh-agent
+        eval $(ssh-agent -s)
+        echo "$KEY" | tr -d '\r' | ssh-add - > /dev/null
+        ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+        # Копируем собранные файлы на сервер
+        rsync -r --delete-after ./build/ $USER@$HOST:/root/_/ui/build
