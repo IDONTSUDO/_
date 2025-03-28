@@ -18,7 +18,9 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H 147.45.245.201 >> ~/.ssh/known_hosts
-
+    - name: echo
+      run: |
+        cat ~/.ssh/id_rsa  
     - name: Create a file on the server
       run: |
         ssh root@147.45.245.201 "echo 'Hello, World!' > /path/to/your/file.txt"
