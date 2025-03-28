@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: echo key
       run: |
         echo "$SSH_PRIVATE_KEY"
     - name: Set up SSH
