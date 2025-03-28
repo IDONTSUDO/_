@@ -30,10 +30,8 @@ jobs:
         USER: ${{ secrets.USER }} # Имя пользователя на сервере
         KEY: ${{ secrets.PM2_PRIVATE_KEY }} # SSH ключ для доступа
       run: |
-        mkdir -p ~/.ssh
-        # Установите ssh-agent
+        mkdir -p ~/.ssh 
         eval $(ssh-agent -s)
         echo "$KEY" | tr -d '\r' | ssh-add - > /dev/null
         ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
-        # Копируем собранные файлы на сервер
         rsync -r --delete-after ./build/ $USER@$HOST:/root/_/ui/build
