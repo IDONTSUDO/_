@@ -1,0 +1,36 @@
+   name: Deploy React App
+
+   on:
+     push:
+       branches:
+         - main
+
+   jobs:
+     build-and-deploy:
+       runs-on: ubuntu-latest
+
+       steps:
+       - name: Check out the repository
+         uses: actions/checkout@v2
+
+       - name: Set up Node.js
+         uses: actions/setup-node@v2
+         with:
+           node-version: '16'
+
+       - name: Install dependencies
+         run: npm install
+
+       - name: Build the project
+         run: npm run build
+
+       - name: Install PM2
+         run: npm install -g pm2
+
+       - name: Deploy with PM2
+         run: pm2 start ecosystem.config.js --env production
+         env:
+           PM2_PUBLIC_KEY: ${{ secrets.PM2_PUBLIC_KEY }}
+           PM2_PRIVATE_KEY: ${{ secrets.PM2_PRIVATE_KEY }}
+           PM2_APP_ID: ${{ secrets.PM2_APP_ID }}
+   

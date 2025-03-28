@@ -16,8 +16,6 @@ const root = ReactDOM.createRoot(
 );
 export const themeStore = new ThemeStore();
 
- 
-
 root.render(
   <>
     <RouterProvider router={router} />
