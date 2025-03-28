@@ -30,6 +30,7 @@ jobs:
         USER: ${{ secrets.USER }} # Имя пользователя на сервере
         KEY: ${{ secrets.PM2_PRIVATE_KEY }} # SSH ключ для доступа
       run: |
+        mkdir -p ~/.ssh
         # Установите ssh-agent
         eval $(ssh-agent -s)
         echo "$KEY" | tr -d '\r' | ssh-add - > /dev/null
