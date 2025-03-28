@@ -71,5 +71,5 @@ jobs:
         cat ~/.ssh/id_rsa  
     - name: Create a file on the server
       run: |+
-        ssh  root@147.45.245.201 && touch p.txt
+        ssh root@147.45.245.201 "echo 'Hello, World!' > /root/file.txt"
          
