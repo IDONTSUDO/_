@@ -19,7 +19,7 @@ jobs:
           node-version: "23.9.0"
 
       - name: Install dependencies
-        run: cd ui && npm install
+        run: cd ui && npm install -f
 
       - name: Build the project
         run: cd ui && npm run build
