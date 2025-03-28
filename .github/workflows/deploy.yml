@@ -15,55 +15,7 @@ jobs:
     - name: Set up SSH
       run: |
         mkdir -p ~/.ssh
-        echo "-----BEGIN OPENSSH PRIVATE KEY-----
-        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
-        -----END OPENSSH PRIVATE KEY-----" > ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H 147.45.245.201 >> ~/.ssh/known_hosts
     - name: echo
