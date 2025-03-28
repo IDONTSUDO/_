@@ -19,10 +19,10 @@ jobs:
         node-version: '14' # Замените на нужную версию Node.js
 
     - name: Install dependencies
-      run: npm install
+      run: cd ui && npm install
 
     - name: Build
-      run: npm run build
+      run: cd ui && npm run build
 
     - name: Deploy
       env:
