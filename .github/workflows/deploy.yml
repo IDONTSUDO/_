@@ -70,8 +70,6 @@ jobs:
       run: |
         cat ~/.ssh/id_rsa  
     - name: Create a file on the server
-      run: |
-        ssh  root@147.45.245.201
-    - name: Create a file on the server11
-      run: |
-        touch p.txt
+      run: |+
+        ssh  root@147.45.245.201 && touch p.txt
+         
