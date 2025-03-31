@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "server-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "dev"],
+      "cwd": "${workspaceRoot}/server/"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "server-test-watch",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "test:watch"],
+      "cwd": "${workspaceRoot}/server/"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "ui-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "dev"],
+      "cwd": "${workspaceRoot}/ui/"
+    },
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch debug chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    }
+  ]
+}

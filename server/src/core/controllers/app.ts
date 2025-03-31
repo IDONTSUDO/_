@@ -49,7 +49,7 @@ export class App extends TypedEvent<ServerStatus> {
     crones: CronController[],
     env: Environment
   ) {
-    this.port = 4000; // 4001
+    this.port = 4001; 
     this.socketSubscribers = socketSubscribers;
     this.env = env;
     this.app = express();

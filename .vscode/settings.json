@@ -1,3 +1,36 @@
 {
-  "cSpell.words": ["продуктов"]
+  "cSpell.words": [
+    "введите",
+    "Ведите",
+    "дерево",
+    "Количество",
+    "модели",
+    "может",
+    "навык",
+    "Новое",
+    "отрицательное",
+    "принимать",
+    "скила",
+    "создано",
+    "число",
+    "эпох",
+    "эпоха",
+    "Collada",
+    "Contolls",
+    "GLTF",
+    "grau",
+    "idontsudo",
+    "Pids",
+    "raycaster",
+    "skils",
+    "typedataset",
+    "URDF",
+    "usecases"
+  ],
+  "files.exclude": {
+    "**/.git": false,
+    "**/.svn": false,
+    "**/.hg": false,
+    "**/CVS": false
+  }
 }
