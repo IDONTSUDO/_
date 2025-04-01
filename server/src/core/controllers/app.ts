@@ -14,6 +14,7 @@ import { CreateFileUseCase } from "../usecases/create_file_usecase";
 import { TransactionDBModel } from "../../features/sync_marketplace_transactions/trasaction_database_model";
 import { DeleteFolderRecursiveContent } from "../usecases/delete_folder_recursive_content";
 import { ReadExelUseCase } from "../usecases/read_exel_usecase";
+import { validationMiddleware } from "../middlewares/validation_auth";
 
 export enum ServerStatus {
   init = "init",
@@ -105,6 +106,7 @@ export class App extends TypedEvent<ServerStatus> {
     this.app.use(cors());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use((req, res, next) => validationMiddleware(req, res, next));
     this.app.use(
       fileUpload({
         createParentPath: true,
@@ -116,7 +118,7 @@ export class App extends TypedEvent<ServerStatus> {
     routes.forEach((route) => {
       this.app.use("/", route.router);
     });
-     
+
   }
 
   async loadAppDependencies(): Promise<void> {
@@ -138,4 +140,3 @@ export class App extends TypedEvent<ServerStatus> {
 }
 
 
- 
