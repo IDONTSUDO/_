@@ -33,11 +33,11 @@ interface ISubSetFeatureRouter<T> {
   method: HttpMethodType;
   subUrl: string;
   fn:
-    | CallbackStrategyWithValidationModel<T>
-    | CallbackStrategyWithEmpty
-    | CallbackStrategyWithIdQuery
-    | CallBackStrategyWithQueryPage
-    | CallbackStrategyWithFileUpload;
+  | CallbackStrategyWithValidationModel<T>
+  | CallbackStrategyWithEmpty
+  | CallbackStrategyWithIdQuery
+  | CallBackStrategyWithQueryPage
+  | CallbackStrategyWithFileUpload;
 }
 
 abstract class ICoreHttpController {
@@ -81,8 +81,11 @@ export class CoreHttpController<V> implements ICoreHttpController {
       this.subRoutes.map((el) => {
         this.router[el.method.toLowerCase()](this.mainURL + "/" + el.subUrl, async (req, res) => {
           if (el.fn instanceof CallbackStrategyWithValidationModel) {
-            // TODO(IDONTSUDO):
+            // // TODO(IDONTSUDO):
             throw Error("needs to be implimed");
+            // await validationModelMiddleware(el.fn.validationModel, req.body)
+            // console.log(req.model)
+            // return res.status(200);
           }
           if (el.fn instanceof CallbackStrategyWithIdQuery) {
             if (req.query.id === undefined) {
@@ -149,6 +152,7 @@ export class CoreHttpController<V> implements ICoreHttpController {
     }
 
     if (this.routes["POST"] != null) {
+      console.log(200)
       this.router.post(this.mainURL, validationModelMiddleware(this.validationModel), (req, res) =>
         this.requestResponseController<V>(req, res, this.routes["POST"])
       );
@@ -187,7 +191,7 @@ export class CoreHttpController<V> implements ICoreHttpController {
     if (req["model"] != undefined) {
       payload = req.body as T;
     }
-     
+
     if (req.query.page !== undefined) {
       payload = String(req.query.page);
     }
