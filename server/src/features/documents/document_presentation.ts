@@ -8,6 +8,7 @@ import { MongoIdValidation } from "../../core/validations/mongo_id_validation";
 import { ReadByIdDataBaseModelUseCase } from "../../core/usecases/read_database_model_usecase";
 import { GetTheLargestNumberFromACollectionUseCase } from "../../core/usecases/get_the_largest_number_from_a_collection_model_usecase";
 import { SyncDocumentsUseCase } from "./usecases/sync_documents_scenario";
+import { CrudAuthorizationController } from "../../core/controllers/crud_authorization_controller";
  
 
 
@@ -25,7 +26,7 @@ export class GetLastSyncQueue extends CallbackStrategyWithEmpty {
 
 
 }
-export class DocumentsPresentation extends CrudController<DocumentsValidationModel, typeof DocumentDBModel> {
+export class DocumentsPresentation extends CrudAuthorizationController<DocumentsValidationModel, typeof DocumentDBModel> {
     constructor() {
         super({
             validationModel: DocumentsValidationModel,

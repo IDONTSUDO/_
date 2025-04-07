@@ -1,4 +1,3 @@
-import { ResponseBase } from "../../../core/controllers/http_controller";
 import { toBeginDate, toEndDate } from "../../../core/extensions/date";
 import { Result } from "../../../core/helpers/result";
 import { ProductDBModel } from "../../products/product_database_model";

@@ -10,10 +10,6 @@ import { TypedEvent } from "../helpers/typed_event";
 import { CronController } from "./cron_controller";
 import { dirname } from "path";
 import { CheckAndCreateStaticFilesFolderUseCase } from "../usecases/check_and_create_static_files_folder_usecase";
-import { CreateFileUseCase } from "../usecases/create_file_usecase";
-import { TransactionDBModel } from "../../features/sync_marketplace_transactions/trasaction_database_model";
-import { DeleteFolderRecursiveContent } from "../usecases/delete_folder_recursive_content";
-import { ReadExelUseCase } from "../usecases/read_exel_usecase";
 import { validationMiddleware } from "../middlewares/validation_auth";
 
 export enum ServerStatus {
@@ -124,7 +120,7 @@ export class App extends TypedEvent<ServerStatus> {
   async loadAppDependencies(): Promise<void> {
     await new CheckAndCreateStaticFilesFolderUseCase().call()
 
-    await (await new DataBaseConnectUseCase().call("ozon")).fold(
+    await (await new DataBaseConnectUseCase().call()).fold(
       async (_s) => { },
       async (_e) => {
         this.setServerStatus(ServerStatus.error);

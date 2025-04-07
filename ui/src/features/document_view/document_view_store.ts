@@ -9,7 +9,7 @@ import { IBalanceReport } from "./sub_features/balance_report_day/balance_report
 export class DocumentViewStore extends FormState<BaseDocument, any> {
     viewModel: BaseDocument;
     formBuilderModel?: FormBuilderValidationModel;
-    navigate?: NavigateFunction;
+
     documentViewHttpRepository: DocumentViewHttpRepository = new DocumentViewHttpRepository();
     constructor() {
         super();

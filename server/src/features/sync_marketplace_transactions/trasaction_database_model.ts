@@ -1,7 +1,7 @@
 import { ObjectId, Schema, model } from "mongoose";
-import { schemaShop } from "../create_new_shop/shop_database_model";
+import { apllyAuth, AuthModel } from "../../core/models/auth_model";
 
-export interface ITransactionDataBaseModel {
+export interface ITransactionDataBaseModel extends AuthModel {
   storeId: ObjectId;
   operationId: string;
   amount: number;
@@ -17,12 +17,7 @@ export interface ITransactionDataBaseModel {
   quality: number;
 }
 
-export const TransactionSchema = new Schema({
-  storeId: {
-    type: Schema.Types.ObjectId,
-    ref: schemaShop,
-    autopopulate: false,
-  },
+export const TransactionSchema = new Schema(apllyAuth({
   operationId: {
     type: String,
   },
@@ -51,7 +46,7 @@ export const TransactionSchema = new Schema({
   accrualType: {
     type: String
   },
-});
+}));
 
 export const schemaTransaction = "Transaction";
 export const TransactionDBModel = model<ITransactionDataBaseModel>(schemaTransaction, TransactionSchema);

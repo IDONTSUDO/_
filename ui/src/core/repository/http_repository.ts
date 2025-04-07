@@ -1,3 +1,4 @@
+import { AuthorizationLocalStorageRepository } from "../../features/authorization/authorization_repository";
 import { Result } from "../helper/result";
 import { ValidationModel } from "../model/validation_model";
 
@@ -22,10 +23,12 @@ export class HttpRepository {
   public async _formDataRequest<T>(method: HttpMethod, url: string, data?: any): Promise<Result<HttpError, T>> {
     let formData = new FormData();
     formData.append("file", data);
+    const authData = await this.auth();
 
     const reqInit = {
       body: formData,
       method: method,
+      headers: { 'authorization': `Bearer ${authData.token}` },
     };
 
     const response = await fetch(this.server + url, reqInit);
@@ -36,10 +39,11 @@ export class HttpRepository {
   }
   public async _jsonRequest<T>(method: HttpMethod, url: string, data?: any): Promise<Result<HttpError, T>> {
     try {
+      const authData = await this.auth();
       const reqInit = {
         body: data,
         method: method,
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 'authorization': `Bearer ${authData.token}` },
       };
       if (data !== undefined) {
         reqInit["body"] = JSON.stringify(data);
@@ -55,11 +59,28 @@ export class HttpRepository {
       return Result.error(new HttpError(error, 0));
     }
   }
-
+  public async auth() {
+    const authorizationLocalStorageRepository = new AuthorizationLocalStorageRepository();
+    const isAuth = {
+      isAuth: false,
+      token: '',
+    }
+    await authorizationLocalStorageRepository.isAuth().map(async () =>
+      await authorizationLocalStorageRepository.getJwtToken().map((token) => {
+        isAuth.isAuth = true;
+        isAuth.token = token;
+      })
+    );
+    return isAuth;
+  }
   public async _request<T>(method: HttpMethod, url: string, data?: any): Promise<Result<HttpError, T>> {
+    const authData = await this.auth();
+
     const reqInit = {
       body: data,
       method: method,
+      headers: { 'authorization': `Bearer ${authData.token}` },
+
     };
 
     if (data !== undefined) {

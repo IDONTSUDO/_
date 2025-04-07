@@ -1,6 +1,7 @@
 import { Navigate } from "react-router-dom";
-import { AuthorizationLocalStorageRepository } from "../../../features/authorization/authorization_local_storage_repository";
+import { AuthorizationLocalStorageRepository } from "../../../features/authorization/authorization_repository";
 import { AuthorizationScreenPath } from "../../../features/authorization/authorization_screen";
+import { useEffect } from "react";
 
 interface IPrivateRouter {
   children?: JSX.Element | JSX.Element[];
@@ -9,6 +10,14 @@ interface IPrivateRouter {
 export const PrivateRouter = (props: IPrivateRouter) => {
   return new AuthorizationLocalStorageRepository().isAuth().fold(
     () => {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      useEffect(() => {
+        
+      }, []);
+      // const init = () =>{
+
+      // }
+
       return <>{props.children}</>;
     },
     (e) => {

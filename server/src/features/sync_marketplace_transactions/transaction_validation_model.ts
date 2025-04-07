@@ -2,6 +2,7 @@ import { Schema } from "mongoose";
 import { ITransactionDataBaseModel } from "./trasaction_database_model";
 
 export class TransactionValidationModel implements ITransactionDataBaseModel {
+    auth: string;
     quality: number;
     accrualType: string;
     nameOfProductOrService: string;

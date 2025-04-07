@@ -9,6 +9,5 @@ import { AuthValidationModel } from "./auth_validation_model";
             validationModel: AuthValidationModel,
         });
         this.post(new AuthUseCase().call);
-
     }
 }

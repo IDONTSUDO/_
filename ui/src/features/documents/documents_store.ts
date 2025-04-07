@@ -16,7 +16,6 @@ export class DocumentsStore extends CrudFormStore<
   page = 0;
 
   documents: BaseDocument[] = [];
-  navigate?: NavigateFunction;
   syncQueue?: ISyncQueue;
   form?: React.ReactNode;
   constructor() {

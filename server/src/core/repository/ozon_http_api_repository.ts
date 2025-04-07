@@ -529,8 +529,7 @@ export class OzonHttpApiRepository extends HttpRepository implements OzonHttpApi
       (config) => {
         config.headers["Client-Id"] = clientId;
         config.headers["Api-Key"] = apiKey;
-        console.log(clientId)
-        console.log(apiKey)
+
         return config;
       },
       (error) => {

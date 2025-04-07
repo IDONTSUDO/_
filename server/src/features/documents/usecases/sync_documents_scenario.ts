@@ -2,10 +2,8 @@ import { plainToInstance } from "class-transformer";
 import { CallbackStrategyWithEmpty, ResponseBase } from "../../../core/controllers/http_controller";
 import { Result } from "../../../core/helpers/result";
 import { DocumentDBModel } from "../documents_database";
-import { BalanceReportUseCase, SyncDayBalance } from "./balance_report_usecase";
+import { SyncDayBalance } from "./balance_report_usecase";
 import { SyncProductsUseCase } from "./sync_product_usecase";
-import { SyncTransactionsUseCase } from "./sync_transaction_usecase";
-import { BalanceModel } from "../model/balance_model";
 
 export enum StatusDocument {
     AWAIT = "AWAIT",
@@ -35,7 +33,7 @@ export class SyncDocumentsUseCase extends CallbackStrategyWithEmpty {
 
             switch (element.type) {
                 case (DocumentsTypes.syncProducts):
-                    (await new SyncProductsUseCase().call()).fold(async (_) => {
+                    (await new SyncProductsUseCase().call(element.auth)).fold(async (_) => {
                         element.status = StatusDocument.END;
                         await element.save()
                     }, async (error) => {
@@ -43,20 +41,9 @@ export class SyncDocumentsUseCase extends CallbackStrategyWithEmpty {
                         element.status = StatusDocument.ERROR;
                         await element.save()
                     });
-                    return
-                case (DocumentsTypes.syncTransactions):
-                    (await new SyncTransactionsUseCase().call(element.result)).fold(async (_) => {
-                        element.status = StatusDocument.END;
-                        await element.save()
-                    }, async (error) => {
-                        element.error = error;
-                        element.status = StatusDocument.ERROR;
-                        await element.save()
-                    });
-
                     return
                 case (DocumentsTypes.balanceReport):
-                    (await new SyncDayBalance().call(element.result.beginReportDate)).fold(async (el) => {
+                    (await new SyncDayBalance().call(element.result.beginReportDate,)).fold(async (el) => {
                         element.result = el;
                         element.status = StatusDocument.END;
                         await element.save()

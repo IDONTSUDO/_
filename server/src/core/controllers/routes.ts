@@ -1,5 +1,4 @@
 import { AuthPresentation } from "../../features/authorization/auth_presentation";
-import { CreateNewShopPresentation } from "../../features/create_new_shop/create_new_shop_presentation";
 import { DocumentsPresentation } from "../../features/documents/document_presentation";
 import { ExelUploadPresentation } from "../../features/exel_upload/exel_upload";
 import { ProductPresentation } from "../../features/products/product_presentation";
@@ -11,7 +10,6 @@ extensions();
 
 export const httpRoutes: Routes[] = []
   .concat(
-    new CreateNewShopPresentation(),
     new DocumentsPresentation(),
     new ProductPresentation(),
     new TransactionsPresentation(),

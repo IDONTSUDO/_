@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { apllyAuth } from "../../core/models/auth_model";
 
 
 export interface IDocumentsDataBaseModel {
@@ -10,9 +11,10 @@ export interface IDocumentsDataBaseModel {
     syncQueue: number;
     error: any;
     result: any;
+    auth: string;
 }
 
-export const DocumentDbSchema = new Schema<IDocumentsDataBaseModel>({
+export const DocumentDbSchema = new Schema<IDocumentsDataBaseModel>(apllyAuth({
     error: {
         type: Schema.Types.Mixed,
     },
@@ -37,8 +39,8 @@ export const DocumentDbSchema = new Schema<IDocumentsDataBaseModel>({
     },
     result: {
         type: Schema.Types.Mixed,
-    }
-});
+    },
+}));
 
 export const schemaDocumentDb = "Document";
 

@@ -1,8 +1,8 @@
-import { CrudController } from "../../core/controllers/crud_controller";
+import { CrudAuthorizationController } from "../../core/controllers/crud_authorization_controller";
 import { ProductDBModel } from "./product_database_model";
 import { ProductValidationModel } from "./product_validation_model";
 
-export class ProductPresentation extends CrudController<ProductValidationModel, typeof ProductDBModel> {
+export class ProductPresentation extends CrudAuthorizationController<ProductValidationModel, typeof ProductDBModel> {
   constructor() {
     super({
       url: "products",

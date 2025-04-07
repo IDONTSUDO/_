@@ -117,7 +117,7 @@ export abstract class UiDrawerFormState<V, E> extends DrawerState<E> {
 }
 export abstract class FormState<V, E> extends UiErrorState<E> {
   abstract viewModel: V;
-
+  navigate?: NavigateFunction;
   updateFormCallback = () => {
   }
   updateForm(value: Partial<V>) {
@@ -143,6 +143,9 @@ export abstract class FormState<V, E> extends UiErrorState<E> {
   modalCancel = () => {
     this.isModalOpen = false;
   };
+  async init(navigate?: NavigateFunction): Promise<any> {
+    this.navigate = navigate;
+  }
 }
 
 export abstract class CrudFormStore<V extends ValidationModel, E, R extends CrudHttpRepository<V>> extends FormState<V, E> {

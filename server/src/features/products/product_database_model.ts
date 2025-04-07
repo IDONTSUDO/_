@@ -1,7 +1,7 @@
 import { ObjectId, Schema, model } from "mongoose";
-import { schemaShop } from "../create_new_shop/shop_database_model";
+import { apllyAuth, AuthModel } from "../../core/models/auth_model";
 
-export interface IProduct {
+export interface IProduct extends AuthModel {
   name: string;
   sku: number;
   images: string[];
@@ -10,7 +10,7 @@ export interface IProduct {
   storeId?: ObjectId;
 }
 
-export const ProductSchema = new Schema({
+export const ProductSchema = new Schema(apllyAuth({
   name: {
     type: String,
   },
@@ -21,16 +21,12 @@ export const ProductSchema = new Schema({
   price: {
     type: String,
   },
-  storeId: {
-    type: Schema.Types.ObjectId,
-    ref: schemaShop,
-    autopopulate: false,
-  },
+   
   costPrice: {
     default: 0,
     type: Number,
   }
-});
+}));
 
 export const schemaProduct = "Product";
 

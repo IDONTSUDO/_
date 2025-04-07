@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { App } from "../../core/controllers/app";
 import { CoreHttpController } from "../../core/controllers/http_controller";
 import { CreateFileUseCase } from "../../core/usecases/create_file_usecase";
@@ -26,7 +27,8 @@ export class ExelUploadPresentation extends CoreHttpController<any> {
                         const model = new TransactionDBModel();
                         model.skuProduct = transaction.ozonSKU;
                         model.amount = transaction.sum;
-
+                        // @ts-expect-error
+                        model.auth = req.authId
                         model.date = transaction.accrualDate;
                         model.operationId = transaction.accrualID
                         model.nameOfProductOrService = transaction.groupOfServices;

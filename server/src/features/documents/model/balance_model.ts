@@ -12,7 +12,7 @@ export class Balance {
         this.commonBalance = commonBalance;
         this.item = item;
     }
-    update(amount: number, operationType: string, l: any) {
+    update(amount: number) {
         this.transactions += 1
         this.commonBalance += amount;
 

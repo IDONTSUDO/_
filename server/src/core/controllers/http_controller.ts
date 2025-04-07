@@ -198,7 +198,10 @@ export class CoreHttpController<V> implements ICoreHttpController {
     if (req.query.id !== undefined) {
       payload = String(req.query.id);
     }
-    (await useCase(payload)).fold(
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-expect-error
+    (await useCase(payload, req.authId)).fold(
       (ok) => {
         res.json(ok);
         return;

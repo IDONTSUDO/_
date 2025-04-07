@@ -3,6 +3,7 @@ import { IProduct } from "./product_database_model";
 import { Schema } from "mongoose";
 
 export class ProductValidationModel implements IProduct {
+  auth: string;
   @IsNumber()
   costPrice: number;
   images: string[];

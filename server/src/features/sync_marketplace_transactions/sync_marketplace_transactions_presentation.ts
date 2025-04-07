@@ -1,10 +1,10 @@
-import { CrudController } from "../../core/controllers/crud_controller";
+import { CrudAuthorizationController } from "../../core/controllers/crud_authorization_controller";
 import { TransactionValidationModel } from "./transaction_validation_model";
 import { TransactionDBModel } from "./trasaction_database_model";
 
 
 
-export class TransactionsPresentation extends CrudController<typeof TransactionDBModel, TransactionValidationModel> {
+export class TransactionsPresentation extends CrudAuthorizationController<typeof TransactionDBModel, TransactionValidationModel> {
   constructor() {
     super(
       {
