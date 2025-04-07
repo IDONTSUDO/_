@@ -3,16 +3,11 @@ import { AuthorizationStore } from "./authorization_store";
 import { CoreInput } from "../../core/ui/input/input";
 import { CoreButton } from "../../core/ui/button/button";
 import { useStore } from "../../core/helper/use_store";
-import { useEffect } from "react";
 
 export const AuthorizationScreenPath = "/auth";
 export const AuthorizationScreen = observer(() => {
   const store = useStore(AuthorizationStore);
-  useEffect(() => {
-    if (store.authorizationLocalStorageRepository.isAuth()) {
-      store.redirect();
-    }
-  }, []);
+
   return (
     <div style={{ margin: 40 }}>
       <div style={{ height: 20 }} />

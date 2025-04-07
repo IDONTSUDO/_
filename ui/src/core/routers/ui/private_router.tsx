@@ -9,18 +9,13 @@ interface IPrivateRouter {
 
 export const PrivateRouter = (props: IPrivateRouter) => {
   return new AuthorizationLocalStorageRepository().isAuth().fold(
-    () => {
+    (isAuth) => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      useEffect(() => {
-        
-      }, []);
-      // const init = () =>{
-
-      // }
-
+      useEffect(() => {}, []);
       return <>{props.children}</>;
     },
     (e) => {
+     
       return <Navigate to={AuthorizationScreenPath} />;
     }
   );

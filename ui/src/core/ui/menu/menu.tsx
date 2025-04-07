@@ -6,6 +6,8 @@ import { TransactionsScreenPath } from "../../../features/transactions/transacti
 import { useNavigate } from "react-router-dom";
 import { ProductsScreenPath } from "../../../features/products/products_screen";
 import { DocumentsScreenPath } from "../../../features/documents/documents_screen";
+import { AuthorizationLocalStorageRepository } from "../../../features/authorization/authorization_repository";
+import { AuthorizationScreenPath } from "../../../features/authorization/authorization_screen";
 
 export enum MenuItems {
   STORES = "Магазины",
@@ -85,23 +87,39 @@ export const CoreMenu = (props: CoreMenuProps) => {
       </label>
       <div id="overlay">
         <ul style={{ color: "white" }}>
-          {page.map((el) => (
-            <li
-              style={Object.assign(
-                { fontSize: 36 },
-                el.name === props.page ? { backgroundColor: "black" } : {}
-              )}
-              onClick={() => {
-                if (el.path) navigate(el.path);
-              }}
-            >
-              {el.name}
-            </li>
-          ))}
+          {page
+            .map((el) => (
+              <li
+                style={Object.assign(
+                  { fontSize: 36 },
+                  el.name === props.page ? { backgroundColor: "black" } : {}
+                )}
+                onClick={() => {
+                  if (el.path) navigate(el.path);
+                }}
+              >
+                {el.name}
+              </li>
+            ))
+            .add(
+              <>
+                <li
+                  style={Object.assign({ fontSize: 36 })}
+                  onClick={() => {
+                    const authorizationLocalStorageRepository =
+                      new AuthorizationLocalStorageRepository();
+                    authorizationLocalStorageRepository.setJwtToken("");
+                    authorizationLocalStorageRepository.setAuthStatus(false);
+                    navigate(AuthorizationScreenPath, { replace: true });
+                  }}
+                >
+                  log out
+                </li>
+              </>
+            )}
         </ul>
       </div>
       <div>{props.children}</div>
-      {/* <div style={{ width: "100vw" }}>{props.bottom}</div> */}
     </>
   );
 };

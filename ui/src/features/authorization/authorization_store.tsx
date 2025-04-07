@@ -22,9 +22,9 @@ export class AuthorizationStore extends FormState<AuthorizationModel, any> {
       async () => {
         (await this.authorizationHttpRepository.login(this.viewModel)).fold(
           (token) => {
-            this.authorizationLocalStorageRepository.setAuthStatus();
+            this.authorizationLocalStorageRepository.setAuthStatus(true);
             this.authorizationLocalStorageRepository.setJwtToken(token.token);
-            this.redirect();
+            if (this.navigate) this.navigate(DocumentsScreenPath);
           },
           (e) => {
             message.error(e.message);
@@ -33,8 +33,5 @@ export class AuthorizationStore extends FormState<AuthorizationModel, any> {
       },
       async (e) => message.error(e)
     );
-  }
-  redirect() {
-    if (this.navigate) this.navigate(DocumentsScreenPath);
   }
 }
