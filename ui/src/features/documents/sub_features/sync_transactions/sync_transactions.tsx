@@ -38,7 +38,12 @@ export const SyncTransactions: React.FC<IDocumentStore> = observer(
         </form> */}
         <div style={{ height: 100 }} />
         <label className="input-file">
-          <input ref={ref} type="file" name="file" />
+          <input
+            ref={ref}
+            type="file"
+            name="file"
+            accept="application/pdf, application/vnd.ms-excel"
+          />
           <span className="input-file-btn">Выберите файл</span>
         </label>
         <div style={{ height: 100 }} />
