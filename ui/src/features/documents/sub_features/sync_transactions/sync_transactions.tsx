@@ -22,20 +22,7 @@ export const SyncTransactions: React.FC<IDocumentStore> = observer(
           text="загрузите exel"
           type={CoreTextType.large}
         />
-        {/* <form id="uploadForm" encType="multipart/form-data"    style={{
-              border: "1px solid #ccc;",
-              display: "inline-block;",
-              padding: "6px 12px;",
-              cursor: "pointer;",
-              height: 200,
-            }}>
-          <input
-            
-            ref={ref}
-            type="file"
-            id="fileInput"
-          />
-        </form> */}
+
         <div style={{ height: 100 }} />
         <label className="input-file">
           <input
@@ -47,6 +34,14 @@ export const SyncTransactions: React.FC<IDocumentStore> = observer(
           <span className="input-file-btn">Выберите файл</span>
         </label>
         <div style={{ height: 100 }} />
+        {store.file === undefined ? (
+          <div style={{ justifySelf: "center" }}>Exel не загружен</div>
+        ) : (
+          <div style={{ justifySelf: "center" }}>
+            загружен файл {store.file.name}
+          </div>
+        )}
+
         <div
           style={{
             display: "flex",
