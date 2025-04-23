@@ -16,7 +16,9 @@ export class SyncTransactionStore extends FormState<SyncTransactionModel, any> {
             message.error('upload file');
             return
         }
+        this.isLoading = true;
         await (await this.repository.uploadExel(this.file)).fold((_) => message.info('Exel загружен'), (_) => message.error('Не предвиденная ошибка'))
+        this.isLoading = false;
         // console.log(endCallback);
         endCallback();
     }

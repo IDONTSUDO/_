@@ -23,23 +23,29 @@ export const SyncTransactions: React.FC<IDocumentStore> = observer(
           type={CoreTextType.large}
         />
 
-        <div style={{ height: 100 }} />
-        <label className="input-file">
-          <input
-            ref={ref}
-            type="file"
-            name="file"
-            accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-          />
-          <span className="input-file-btn">Выберите файл</span>
-        </label>
-        <div style={{ height: 100 }} />
-        {store.file === undefined ? (
-          <div style={{ justifySelf: "center" }}>Exel не загружен</div>
+        {store.isLoading ? (
+          <>Загрузка...</>
         ) : (
-          <div style={{ justifySelf: "center" }}>
-            загружен файл {store.file.name}
-          </div>
+          <>
+            <div style={{ height: 100 }} />
+            <label className="input-file">
+              <input
+                ref={ref}
+                type="file"
+                name="file"
+                accept=".xls,.xlsx,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              />
+              <span className="input-file-btn">Выберите файл</span>
+            </label>
+            <div style={{ height: 100 }} />
+            {store.file === undefined ? (
+              <div style={{ justifySelf: "center" }}>Exel не загружен</div>
+            ) : (
+              <div style={{ justifySelf: "center" }}>
+                загружен файл {store.file.name}
+              </div>
+            )}
+          </>
         )}
 
         <div
